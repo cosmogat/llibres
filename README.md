@@ -1,5 +1,5 @@
 # llibresPHP
-A web application for manage your own library
+A web application for manage your own library based on cossinoguesPHP (a future and very simple cms in php).
 
 ## Install
 Go to your www folder and write:

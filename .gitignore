@@ -17,3 +17,4 @@ css/lightbox.css
 css/*.map
 sql/*.bak
 sql/insert.sql
+images/*

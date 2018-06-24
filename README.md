@@ -18,6 +18,15 @@ mv js/* ../js/
 mv fonts/* ../fonts/
 cd ..
 rm -rf bs
+wget https://github.com/lokesh/lightbox2/archive/master.zip
+unzip master.zip
+rm master.zip
+cd lightbox2-master/src
+cp css/lightbox.css ../../css/
+cp js/lightbox.js ../../js/
+cp -r images ../../
+cd ../..
+rm -rf lightbox2-master
 cd sql
 mysql -u USER -pPASS < creacio.sql
 mysql -u USER -pPASS bdllibres < categories.sql
@@ -26,8 +35,9 @@ cd ..
 Change USER and PASS by your own user and password of MySQL server.
 
 ## References
-* [bootstrap] (https://github.com/twbs/bootstrap) - Bootstrap
+* [bootstrap](https://github.com/twbs/bootstrap) - Bootstrap
 * [jquery](https://github.com/jquery/jquery) - jQuery JavaScript Library.
+* [lightbox2](https://github.com/lokesh/lightbox2) - Lightbox script.
 * [openclipart](https://openclipart.org/) - Open Clipart.
 ## Autors
 * **Cosmo Cat**  [cosmogat](https://github.com/cosmogat)

@@ -7,7 +7,6 @@ Go to your www folder and write:
 git clone https://github.com/cosmogat/llibres
 cd llibres/sh
 ./ins_dep.sh
-
 cd ../sql
 mysql -u USER -pPASS < creacio.sql
 mysql -u USER -pPASS bdllibres < categories.sql

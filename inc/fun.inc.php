@@ -52,7 +52,7 @@ function descripcio($cadena) {
     $text2 = "";
     $tam = strlen($text);
     if ($tam > $max1) {
-        $text = substr($text, 0, $max1);
+        $text = substr($text, 0, $max1 + 1);
         $i = $max1;
         while ($i > 0 and $text[$i] != ".")
             $i--;

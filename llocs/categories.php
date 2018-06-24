@@ -150,7 +150,7 @@ class LlocCategories {
                 $tpl->set("TITOL", $val[1]);
                 $tpl->set("IMG", Link::img("llibres/" . $val[2]));
                 $tpl->set("AUTOR", $val[3]);
-                if ($val[11] != "")
+                if ($val[4] != "")
                     $tpl->set("ANY", ", " . $val[4]);
                 else
                     $tpl->set("ANY", "");

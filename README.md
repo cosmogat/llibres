@@ -18,15 +18,15 @@ mv js/* ../js/
 mv fonts/* ../fonts/
 cd ..
 rm -rf bs
-
-cd ../sql
-mysql -u USER -pPASS < bdrosquilletes.sql
-mysql -u USER -pPASS bdrosquilletes < insert.sql
-cd -
+cd sql
+mysql -u USER -pPASS < creacio.sql
+mysql -u USER -pPASS bdllibres < categories.sql
+cd ..
 ```
 Change USER and PASS by your own user and password of MySQL server.
 
 ## References
+* [bootstrap] (https://github.com/twbs/bootstrap) - Bootstrap
 * [jquery](https://github.com/jquery/jquery) - jQuery JavaScript Library.
 * [openclipart](https://openclipart.org/) - Open Clipart.
 ## Autors

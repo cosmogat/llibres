@@ -16,6 +16,9 @@ cd bs
 mv css/* ../css/
 mv js/* ../js/
 mv fonts/* ../fonts/
+cd ..
+rm -rf bs
+
 cd ../sql
 mysql -u USER -pPASS < bdrosquilletes.sql
 mysql -u USER -pPASS bdrosquilletes < insert.sql

@@ -1,0 +1,3 @@
+1
+Aquest arxiu no s'ha de tenir en compte a l'hora de fer scripts d'exportació amb rsync, svn, git... És l'arxiu que ens diu quin perfil de desenvolupament tenim.
+Al llegir-lo s'ignorarà tot excepte el primer caràcter. Aquest caràcter llegit selecciona l'arxiu de configuració que utilitzarà l'aplicació.

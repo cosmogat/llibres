@@ -1,0 +1,21 @@
+<?php
+// 07-01-2018
+// alex
+// conf_0.inc.php
+
+$conf = array();
+
+$conf["bd"]["user"] = "root";
+$conf["bd"]["pass"] = "pass";
+$conf["bd"]["host"] = "localhost";
+$conf["bd"]["bdad"] = "bdllibres";
+$conf["bd"]["enco"] = true;
+// codificar les eixides de la base de dades a utf-8
+
+$conf["in"]["host"] = "http://www.llibresdomain.org";
+$conf["in"]["depu"] = false;
+$conf["in"]["conn"] = 1;
+// tipus de connexions acceptades:
+//   0 -> només localhost
+//   1 -> 0 + xarxa local
+//   2 -> 1 + internet

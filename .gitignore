@@ -1,0 +1,17 @@
+*~
+cnf/conf_?.inc.php
+img/autors/*
+img/llibres/*
+js/bootstrap.js
+js/bootstrap.min.js
+js/jquery.min.js
+js/lightbox.js
+js/npm.js
+css/bootstrap.css
+css/bootstrap.min.css
+css/bootstrap-theme.css
+css/bootstrap-theme.min.css
+css/lightbox.css
+css/*.map
+sql/*.bak
+sql/insert.sql

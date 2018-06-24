@@ -1,0 +1,93 @@
+<!-- INI comu_cap-1 -->
+<!doctype html>
+<html lang="es-ES">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{URL_B}/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="{URL_B}/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet">
+    <link href="{URL_B}/css/lightbox.css" type="text/css" rel="stylesheet">
+    <script src="{URL_B}/js/jquery.min.js"></script>
+    <script src="{URL_B}/js/bootstrap.min.js"></script>
+    <!-- FIN comu_cap-1 -->
+    <!-- INI css -->
+    <link href="{URL_CSS}" type="text/css" rel="stylesheet">
+    <!-- FIN css -->
+    <!-- INI jsc_cap -->
+    <script src="{URL_JAV}"></script>
+    <!-- FIN jsc_cap -->
+    <!-- INI comu_cap0 -->
+    <title>{LLOC}</title>
+  </head>
+  <body style="padding: 10px;" onload="init();">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Navegació</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="{INDEX}">
+	    <img alt="logo" src="{LOGO}"/>
+	  </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+	  <!-- FIN comu_cap0 -->
+	  <!-- INI menu_ini -->
+	  <ul class="nav navbar-nav">
+	    <!-- FIN menu_ini -->
+	    <!-- INI menu_item -->
+            <li class="{MENU_ACTIU}"><a href="{MENU_LINK}">{MENU_TEXT}</a></li>
+	    <!-- FIN menu_item -->
+	    <!--<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span><span class="caret"></span></a>
+		<ul class="dropdown-menu">
+		  <li><a href="#">Page 1- 1</a></li>
+		  <li class="active"><a href="#">Page 1-2</a></li>
+		  <li><a href="#">Page 1-3</a></li>
+		</ul>
+            </li>-->
+	    <!-- INI menu_fi -->
+	  </ul>
+	  <!-- FIN menu_fi -->
+	  <!-- INI comu_cap1 -->
+          <form class="navbar-form navbar-right" action="{CERQUES}" method="post">
+	    <div class="form-group">
+              <input type="text" placeholder="Introduïu el text a cercar" class="form-control" name="txt_cerca">
+            </div>
+            <button type="submit" class="btn btn-info" name="cercar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Cercar</button>
+	    <!-- FIN comu_cap1 -->
+	    <!-- INI login -->
+	    <a href="{ENTRAR}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+	    <!-- FIN login -->
+	    <!-- INI logout -->
+	    <a href="{EIXIR}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+	    <!-- FIN logout -->
+	    <!-- INI comu_cap2 -->
+	  </form>
+        </div>
+      </div>
+    </nav>
+    <br/><br/><br/>
+    <!-- FIN comu_cap2 -->    
+    <!-- INI molles_ini -->
+    <ol class="breadcrumb">
+      <!-- FIN molles_ini -->
+      <!-- INI molla_nact -->
+      <li><a href="{LINK}">{TXT_NACT}</a></li>
+      <!-- FIN molla_nact -->
+      <!-- INI molla_act -->
+      <li class="active">{TXT_ACT}</li>
+      <!-- FIN molla_act -->
+      <!-- INI molles_fi -->
+    </ol>
+    <!-- FIN molles_fi -->
+    <!-- INI jsc_peu -->
+    <script src="{URL_JAV}"></script>
+    <!-- FIN jsc_peu -->
+    <!-- INI comu_peu -->
+  </body>
+</html>
+<!-- FIN comu_peu -->

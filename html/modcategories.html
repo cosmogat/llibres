@@ -1,0 +1,86 @@
+<!-- INI form_afegir -->
+<div class="container">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <h3>{ACCIO} categoria</h3>
+    <form action="{ACTION}" method="post">
+      <label for="num_cat">Número complet de la categoria</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="num" type="text" class="form-control" value="{VALOR1}" placeholder="Número complet de la {CAT}" id="num_cat" aria-describedby="basic-addon1">
+      </div>
+      <br />
+      <label for="nom_cat">Nom de la categoria</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="nom" type="text" class="form-control" value="{VALOR2}" placeholder="Nom de la categoria" id="nom_cat" aria-describedby="basic-addon2">
+      </div>
+      <br />
+      <div class="btn-group pull-right" role="group" aria-label="...">
+	<div class="btn-group" role="group">
+	  <!--<a href="{TORNAR}" class="btn btn-info" role="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>-->
+	  <button class="btn btn-{BOTO}" name="afegir" type="submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;{ACCIO}</button>
+	</div>
+      </div>
+      <div class="btn-group pull-left" role="group" aria-label="...">
+	<div class="btn-group" role="group">
+	  <a href="{TORNAR}" class="btn btn-info" role="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>
+	  <!--<button class="btn btn-{BOTO}" name="afegir" type="submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;{ACCIO}</button>-->
+	</div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-3"></div>
+  <div class="col-md-12">
+    <hr />
+  </div>
+</div>
+<!-- FIN form_afegir -->
+<!-- INI ale_1 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    No es poden afegir categories amb valors buits o amb caràcter no vàlids.
+  </div>
+</div>
+<!-- FIN ale_1 -->
+<!-- INI ale_2 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Aquest tipus de categoria no es pot afegir.
+  </div>
+</div>
+<!-- FIN ale_2 -->
+<!-- INI ale_3 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    La categoria ja existeix i no es pot afegir.
+  </div>
+</div>
+<!-- FIN ale_3 -->
+<!-- INI ale_4 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Error a l'afegir la categoria. Error en el número de la categoria.
+  </div>
+</div>
+<!-- FIN ale_4 -->
+<!-- INI ale_5 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Error a l'afegir la categoria. Error a l'insertar en la base de dades.
+  </div>
+</div>
+<!-- FIN ale_5 -->
+<!-- INI ale_6 -->
+<div class="container">
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Categoria afegida correctament.
+  </div>
+</div>
+<!-- FIN ale_6 -->

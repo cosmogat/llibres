@@ -1,0 +1,66 @@
+<!-- INI llibre_ini -->
+<div class="container">
+  <div class="list-group">
+    <!-- FIN llibre_ini -->
+    
+    <!-- INI llibre_res -->
+    <a class="list-group-item" href="{LINK}">
+      <div class="media">
+	<div class="media-left">
+	  <img class="media-object img-thumbnail img-responsive" style="max-width:125px;" src="{IMG}" alt="Portada de {TITOL}">
+	</div>     
+	<div class="media-body">
+	  <h4 class="media-heading"></span>{TITOL}</h4>
+	  {AUTOR}{ANY}.<br />
+	  {DESCR1}<span class="hidden-xs">{DESCR2}</span>
+	</div>
+      </div>
+    </a>
+    <!-- FIN llibre_res -->
+    
+    <!-- INI llibre_fi -->
+  </div>
+</div>
+<!-- FIN llibre_fi -->
+<!-- INI barra -->
+<div class="container">
+  <form action="{ACTION}" method="post">
+    <div class="input-group">
+      <input type="text" class="form-control" value="{CERCA_ANT}" placeholder="Introduïu el text a cercar" name="txt_cerca">
+      <span class="input-group-btn">
+        <button class="btn btn-info" name="cercar" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;Cercar</button>
+      </span>
+    </div>
+  </form>
+  <hr />
+</div>
+<!-- FIN barra -->
+<!-- INI estat1 -->
+<div class="container">
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Introdueix algun text per poder realitzar la cerca.
+  </div>
+</div>
+<!-- FIN estat1 -->
+<!-- INI estat2 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Has introduït caràcters no vàlids al camp de cerca.
+  </div>
+</div>
+<!-- FIN estat2 -->
+<!-- INI estat3 -->
+<div class="container">
+  <big>S'han trobat {NUM} coincidències:</big><br />
+</div>
+<!-- FIN estat3 -->
+<!-- INI estat4 -->
+<div class="container">
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    No s'han trobat resultats. Prova a realitzar la cerca sense accents.
+  </div>
+</div>
+<!-- FIN estat4 -->

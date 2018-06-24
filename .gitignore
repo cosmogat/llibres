@@ -1,7 +1,9 @@
 *~
 cnf/conf_?.inc.php
-img/autors/*
-img/llibres/*
+img/autors/*.png
+img/autors/*.jpg
+img/llibres/*.png
+img/llibres/*.jpg
 js/bootstrap.js
 js/bootstrap.min.js
 js/jquery.min.js

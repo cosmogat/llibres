@@ -96,7 +96,7 @@ class Consulta {
             ORDER BY Classificacio.codi, Subclassificacio.codi, Subsubclassificacio.codi";
         return $sql;
     }
-
+    
     static public function subsubclass_perCodi($codi0, $codi1, $codi2) {
         return self::cercaInterna("", 0, $codi0, $codi1, $codi2, 0, "");
     }
@@ -104,7 +104,28 @@ class Consulta {
     static public function cercarLlibres($txt) {
         return self::cercaInterna($txt, 0, 0, 0, 0, 0, "");
     }
-
+    
+    static public function class_perId($tipus, $id) {
+        $taula = "";
+        $colum = "";
+        if ($tipus == 1) {
+            $taula = "Classificacio";
+            $colum = "idcla";
+        }
+        else if ($tipus == 2) {
+            $taula = "Subclassificacio";
+            $colum = "idsub";
+        }
+        else if ($tipus == 3) {
+            $taula = "Subsubclassificacio";
+            $colum = "idsubsub";
+        }
+        $sql = "SELECT codi AS c00, nom AS c01
+                FROM  " . $taula . "
+                WHERE " . $colum . " = " . intval($id);
+        return $sql;
+    }
+    
     static public function entrar($us, $co_sha1) {
         $sql = "SELECT idusuari FROM Usuaris WHERE nom = '" . $us . "' AND contrassenya = '" . $co_sha1 . "'";
         return $sql;

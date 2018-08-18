@@ -14,6 +14,7 @@ class LlocModcategories {
 
     public $mod = -1;
     public $cat = -1;
+    public $nom_cat = "";
     public $tipus = -1;
     public $alert = 0;
 
@@ -72,6 +73,13 @@ class LlocModcategories {
                     $this->alert = 2;
             }
         }
+        else if ($this->mod == 1) {
+            $vec = BaseDades::consVector(Consulta::categories2id($this->cat));
+            if (count($vec) == 0)
+                redireccionar(Link::url("index"));
+            $this->nom_cat = BaseDades::consVector(Consulta::class_perId($this->tipus, $vec[0][$this->tipus - 1]))[0][1];
+           
+        }
         
     }
     public function imprimir() {
@@ -99,12 +107,16 @@ class LlocModcategories {
             $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-categories", Peticio::obte("cat")));
             $tpl->set("ACCIO", "Editar");
             $tpl->set("BOTO", "warning");
-
+            if (Peticio::exis("afegir") and ($this->alert < 6) and ($this->alert > 0)) { }
+            else {
+                $tpl->set("VALOR1", $this->cat);
+                $tpl->set("VALOR2", $this->nom_cat);
+            }
             $tpl->set("TORNAR", Link::url("categories", substr(Peticio::obte("cat"), 0, strlen(Peticio::obte("cat")) - 1)));
             $tpl->imprimir();            
         }
         if ($this->alert != 0)
             $tpl->carregarMostrar("modcategories", "ale_" . $this->alert);
-        //Peticio::impr();
+        Peticio::impr();
     }
 }

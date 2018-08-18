@@ -6,7 +6,7 @@ class Consulta {
     
     private function __construct() {}
     
-    private function cercaInterna($txt, $prop, $codi1, $codi2, $codi3, $num, $escr) {
+    private static function cercaInterna($txt, $prop, $codi1, $codi2, $codi3, $num, $escr) {
         $c0 = $prop;
         $c1 = intval($codi1);
         $c2 = intval($codi2);

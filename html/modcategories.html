@@ -7,7 +7,7 @@
       <label for="num_cat">Número complet de la categoria</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="num" type="text" class="form-control" value="{VALOR1}" placeholder="Número complet de la {CAT}" id="num_cat" aria-describedby="basic-addon1">
+	<input name="num" type="text" class="form-control" value="{VALOR1}" placeholder="Número complet de la categoria" id="num_cat" aria-describedby="basic-addon1">
       </div>
       <br />
       <label for="nom_cat">Nom de la categoria</label>
@@ -84,3 +84,79 @@
   </div>
 </div>
 <!-- FIN ale_6 -->
+<!-- INI ale_7 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Error a l'editar la categoria. La categoria original i la nova han de tenir la mateixa longitud.
+  </div>
+</div>
+<!-- FIN ale_7 -->
+<!-- INI ale_8 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Caràcters no vàlids en el nou nom de la categoria.
+  </div>
+</div>
+<!-- FIN ale_8 -->
+<!-- INI ale_9 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    No s'ha editat res. Els valors originas i els nous són iguals.
+  </div>
+</div>
+<!-- FIN ale_9 -->
+<!-- INI ale_10 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Error al canviar el nom de la categoria en la base de dades.
+  </div>
+</div>
+<!-- FIN ale_10 -->
+<!-- INI ale_11 -->
+<div class="container">
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Nom de la categoria canviat correctament.
+  </div>
+</div>
+<!-- FIN ale_11 -->
+<!-- INI ale_12 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    La categoria introduïda ja existeix.
+  </div>
+</div>
+<!-- FIN ale_12 -->
+<!-- INI ale_13 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Les categoria nova conté supracategories no existents.
+  </div>
+</div>
+<!-- FIN ale_13 -->
+<!-- INI ale_14 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Error al canviar el número de la categoria en la base de dades.
+  </div>
+</div>
+<!-- FIN ale_14 -->
+<!-- INI avis -->
+<div class="container">
+  <div class="well">
+    Si s'edita el número de la categoria, s'ha d'editar tenint amb compte:
+    <ul>
+    <li>El tipus de categoria nou i l'original han de ser els mateixos. En altres paraules, han de tenir el mateix nombre de números.</li>
+    <li>A l'editar un categoria s'hereda tot el que estigue per baix d'ella, siguen subcategories o llibres.</li>
+    <li>Si l'edició del número de categoria ha sigut correcta, es redirigirà a la pàgina d'edició amb el nou número. No surtira cap missatge.</li>
+</ul>
+  </div>
+</div>
+<!-- FIN avis -->

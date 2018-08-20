@@ -78,7 +78,55 @@ class LlocModcategories {
             if (count($vec) == 0)
                 redireccionar(Link::url("index"));
             $this->nom_cat = BaseDades::consVector(Consulta::class_perId($this->tipus, $vec[0][$this->tipus - 1]))[0][1];
-           
+            if (Peticio::exis("afegir")) {
+                $nou_nom = trim(Peticio::obte("nom"));
+                $nou_num = trim(Peticio::obte("num"));
+                if (strlen($nou_num) != $this->tipus)
+                    $this->alert = 7;
+                if (!cadValid($nou_nom))
+                    $this->alert = 8;
+                if (($nou_num == $this->cat) and ($nou_nom == $this->nom_cat))
+                    $this->alert = 9;
+                if ($this->alert == 0) {
+                    if ($nou_nom != $this->nom_cat) {
+                        if (!BaseDades::consulta(Consulta::editClassNom_perId($this->tipus, $vec[0][$this->tipus - 1], $nou_nom)))
+                            $this->alert = 10;
+                        else {
+                            $this->nom_cat = $nou_nom;
+                            $this->alert = 11;
+                        }
+                    }
+                }
+                if (($this->alert == 0) or ($this->alert == 11)) {
+                    if ($nou_num != $this->cat) {
+                        if (count(BaseDades::consVector(Consulta::categories2id($nou_num))) != 0)
+                            $this->alert = 12;
+                        else {
+                            $exis = True;
+                            for ($i = 0; $i <= $this->tipus - 2; $i++)
+                                $exis = $exis & (BaseDades::consVector(Consulta::categories2id(substr($nou_num, 0, $i + 1))));
+                            if ($exis == False)
+                                $this->alert = 13;
+                            else {
+                                if (BaseDades::consulta(Consulta::editClassNum_perId($this->tipus, $vec[0][$this->tipus - 1], substr($nou_num, $this->tipus - 1, 1)))) {
+                                    if ($this->tipus == 2) {
+                                        if (!BaseDades::consulta(Consulta::editPareSubclass($nou_num[0], $vec[0][1])))
+                                            $this->alert = 14;
+                                    }
+                                    else if ($this->tipus == 3) {
+                                        if (!BaseDades::consulta(Consulta::editPareSubsubclass($nou_num[0], $nou_num[1], $vec[0][2])))
+                                            $this->alert = 14;
+                                    }
+                                }
+                                else 
+                                    $this->alert = 14;
+                                if ($this->alert != 14)
+                                    redireccionar(Link::url("ed-categories", $nou_num));
+                            }
+                        }
+                    }
+                }
+            }
         }
         
     }
@@ -107,16 +155,17 @@ class LlocModcategories {
             $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-categories", Peticio::obte("cat")));
             $tpl->set("ACCIO", "Editar");
             $tpl->set("BOTO", "warning");
-            if (Peticio::exis("afegir") and ($this->alert < 6) and ($this->alert > 0)) { }
-            else {
+            /* if (Peticio::exis("afegir") and ($this->alert < 6) and ($this->alert > 0)) { } */
+            /* else { */
                 $tpl->set("VALOR1", $this->cat);
                 $tpl->set("VALOR2", $this->nom_cat);
-            }
+            /* } */
             $tpl->set("TORNAR", Link::url("categories", substr(Peticio::obte("cat"), 0, strlen(Peticio::obte("cat")) - 1)));
             $tpl->imprimir();            
         }
         if ($this->alert != 0)
             $tpl->carregarMostrar("modcategories", "ale_" . $this->alert);
+        $tpl->carregarMostrar("modcategories", "avis");
         Peticio::impr();
     }
 }

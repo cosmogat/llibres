@@ -126,6 +126,67 @@ class Consulta {
         return $sql;
     }
     
+    static public function editClassNom_perId($tipus, $id, $nou_nom) {
+        $taula = "";
+        $colum = "";
+        if ($tipus == 1) {
+            $taula = "Classificacio";
+            $colum = "idcla";
+        }
+        else if ($tipus == 2) {
+            $taula = "Subclassificacio";
+            $colum = "idsub";
+        }
+        else if ($tipus == 3) {
+            $taula = "Subsubclassificacio";
+            $colum = "idsubsub";
+        }
+        $sql = "UPDATE " . $taula . " 
+                SET nom = '" . $nou_nom .  "' 
+                WHERE " . $colum . " = " . $id;
+        return $sql;
+    }
+    
+    static public function editClassNum_perId($tipus, $id, $nou_codi) {
+        $taula = "";
+        $colum = "";
+        if ($tipus == 1) {
+            $taula = "Classificacio";
+            $colum = "idcla";
+        }
+        else if ($tipus == 2) {
+            $taula = "Subclassificacio";
+            $colum = "idsub";
+        }
+        else if ($tipus == 3) {
+            $taula = "Subsubclassificacio";
+            $colum = "idsubsub";
+        }
+        $sql = "UPDATE " . $taula . " 
+                SET codi = " . $nou_codi .  "
+                WHERE " . $colum . " = " . $id;
+        return $sql;
+    }
+
+    static public function editPareSubclass($nou_codi_pare, $idsub) {
+        $sql = "UPDATE Subclassificacio 
+                SET classi = (SELECT idcla FROM Classificacio WHERE codi = " . intval($nou_codi_pare) . ") 
+                WHERE idsub = " . intval($idsub);
+        return $sql;
+    }
+    
+    static public function editPareSubsubclass($nou_codi_pare1, $nou_codi_pare2, $idsubsub) {
+        $sql = "UPDATE Subsubclassificacio 
+                SET subclassi = (
+                                SELECT Subclassificacio.idsub AS c00 
+                                FROM Subclassificacio 
+                                INNER JOIN Classificacio ON (Subclassificacio.classi = Classificacio.idcla) 
+                                WHERE Classificacio.codi = " . intval($nou_codi_pare1) . " AND Subclassificacio.codi = " . intval($nou_codi_pare2) . "
+                                )
+                WHERE idsubsub = " . intval($idsubsub);
+        return $sql;
+    }
+   
     static public function entrar($us, $co_sha1) {
         $sql = "SELECT idusuari FROM Usuaris WHERE nom = '" . $us . "' AND contrassenya = '" . $co_sha1 . "'";
         return $sql;

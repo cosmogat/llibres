@@ -128,6 +128,13 @@ class LlocModcategories {
                 }
             }
         }
+        else if ($this->mod == 2) {
+            $vec = BaseDades::consVector(Consulta::categories2id($this->cat));
+            if (BaseDades::consulta(Consulta::elimClass_perId($this->tipus, $vec[0][$this->tipus - 1])))
+                $this->alert = 15;
+            else
+                $this->alert = 16;
+        }
         
     }
     public function imprimir() {
@@ -155,17 +162,20 @@ class LlocModcategories {
             $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-categories", Peticio::obte("cat")));
             $tpl->set("ACCIO", "Editar");
             $tpl->set("BOTO", "warning");
-            /* if (Peticio::exis("afegir") and ($this->alert < 6) and ($this->alert > 0)) { } */
-            /* else { */
-                $tpl->set("VALOR1", $this->cat);
-                $tpl->set("VALOR2", $this->nom_cat);
-            /* } */
+            $tpl->set("VALOR1", $this->cat);
+            $tpl->set("VALOR2", $this->nom_cat);
             $tpl->set("TORNAR", Link::url("categories", substr(Peticio::obte("cat"), 0, strlen(Peticio::obte("cat")) - 1)));
             $tpl->imprimir();            
         }
         if ($this->alert != 0)
             $tpl->carregarMostrar("modcategories", "ale_" . $this->alert);
-        $tpl->carregarMostrar("modcategories", "avis");
-        Peticio::impr();
+        if ($this->mod == 1)
+            $tpl->carregarMostrar("modcategories", "avis");
+        if ($this->mod == 2) {
+            $tpl->carregar("modcategories");
+            $tpl->mostrar("el_tornar");
+            $tpl->set("TORNAR", Link::url("categories", substr(Peticio::obte("cat"), 0, strlen(Peticio::obte("cat")) - 1)));
+            $tpl->imprimir();   
+        }
     }
 }

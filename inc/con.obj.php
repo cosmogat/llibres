@@ -146,6 +146,26 @@ class Consulta {
                 WHERE " . $colum . " = " . $id;
         return $sql;
     }
+
+    static public function elimClass_perId($tipus, $id) {
+        $taula = "";
+        $colum = "";
+        if ($tipus == 1) {
+            $taula = "Classificacio";
+            $colum = "idcla";
+        }
+        else if ($tipus == 2) {
+            $taula = "Subclassificacio";
+            $colum = "idsub";
+        }
+        else if ($tipus == 3) {
+            $taula = "Subsubclassificacio";
+            $colum = "idsubsub";
+        }
+        $sql = "DELETE FROM " . $taula . " 
+                WHERE " . $colum . " = " . $id;
+        return $sql;
+    }
     
     static public function editClassNum_perId($tipus, $id, $nou_codi) {
         $taula = "";

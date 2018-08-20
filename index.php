@@ -58,7 +58,7 @@ $objLloc = new $nomLloc();
 if (!property_exists($objLloc, "permisos") or ($objLloc->permisos < Usuari::permisos()))
     redireccionar(Link::url("index"));
 
-if (method_exists($objLloc, "calculs"))
+if ((method_exists($objLloc, "calculs")) and ($objLloc->permisos >= Usuari::permisos()))
     $objLloc->calculs();
 
 $tpl = new Plantilla("./html");

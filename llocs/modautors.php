@@ -26,16 +26,24 @@ class LlocModautors {
         else
             redireccionar(Link::url("index"));
 
-         if ($this->mod == 0) {
-             
-         }
+        if ($this->mod == 0) {
+            if (Peticio::exis("afegir")) {
+
+            }
+        }
     }
 
     public function imprimir() {
         $tpl = new Plantilla("./html");
         if ($this->mod == 0) {
-
+            $tpl->carregar("modautors");
+            $tpl->mostrar("form_afegir");
+            $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-autors", Peticio::obte("cat")));
+            $tpl->set("ACCIO", "Afegir");
+            $tpl->set("BOTO", "success");
+            $tpl->imprimir();
         }
         Peticio::impr();
+        imprVec($_FILES);
     }
 }

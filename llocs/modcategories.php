@@ -8,7 +8,7 @@ class LlocModcategories {
     public $menu = "categories";
     public $permisos = 1;
     public $molles = array();
-    public $jsc_cap = array("buidar_camps.js");
+    public $jsc_cap = array();
     public $jsc_peu = array();
     public $css = array();
 

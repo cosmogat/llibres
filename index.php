@@ -67,7 +67,7 @@ $tpl->mostrar("comu_cap-1");
 $tpl->set("URL_B", Link::url());
 $tpl->imprimir();
 
-if (property_exists($objLloc, "css") and count($objLloc->css) > 0) {
+if (property_exists($objLloc, "css") and count($objLloc->css) > 0 and ($objLloc->permisos >= Usuari::permisos())) {
     for ($i = 0; $i < count($objLloc->css); $i++) {
         $tpl->carregar("web");
         $tpl->mostrar("css");
@@ -76,7 +76,7 @@ if (property_exists($objLloc, "css") and count($objLloc->css) > 0) {
     }
 }
 
-if (property_exists($objLloc, "jsc_cap") and count($objLloc->jsc_cap) > 0) {
+if (property_exists($objLloc, "jsc_cap") and count($objLloc->jsc_cap) > 0 and ($objLloc->permisos >= Usuari::permisos())) {
     for ($i = 0; $i < count($objLloc->jsc_cap); $i++) {
         $tpl->carregar("web");
         $tpl->mostrar("jsc_cap");

@@ -9,4 +9,5 @@ RewriteRule ^llibres\-([a-z]{2})\-([0-9]{3})\-([A-Z0-9]{3,5})\-([0-9]{3}).html$ 
 RewriteRule ^categories\-([0-9]{0,3}).html$ llibres/index.php?lloc=categories&cat=$1 [L,QSA]
 RewriteRule ^autors\-([A-Z0-9]{0,5}).html$ llibres/index.php?lloc=autors&aut=$1 [L,QSA]
 RewriteRule ^([a-z]{2})\-categories\-([0-9]{1,3}).html$ llibres/index.php?lloc=modcategories&op=$1&cat=$2 [L,QSA]
+RewriteRule ^([a-z]{2})\-autors\-([A-Z0-9]{3,5}).html$ llibres/index.php?lloc=modautors&op=$1&cat=$2 [L,QSA]
 </IfModule>

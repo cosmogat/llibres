@@ -2,7 +2,7 @@
 <div class="container">
   <div class="col-md-3"></div>
   <div class="col-md-6">
-    <h3>{ACCIO} autora o autor o col·lecció</h3>
+    <h3>{ACCIO} autora, autor o col·lecció</h3>
     <form enctype="multipart/form-data" action="{ACTION}" method="post">
       <label for="num_cat">Nom complet de l'autor o col·lecció</label>
       <div class="input-group">
@@ -11,18 +11,18 @@
       </div>
       <br />
       
-      <label for="col">Es tracta d'una col·lecció? &nbsp;<input type="checkbox" value=""></label><br />
+      <label for="col">Es tracta d'una col·lecció? &nbsp;<input name="col" type="checkbox" value=""></label><br />
       <br />
 
       <div class="form-group">
 	<label for="imatge">Fotografia o imatge</label>
-	<input name="foto" type="file" class="form-control-file" id="imatge">
+	<input name="foto" type="file" class="form-control-file" id="imatge" accept="image/*">
       </div>
       
       <label for="bio">Biografia o descripció</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<textarea name="desc" class="form-control" rows="5" id="comment" placeholder="Breu descripció o biografia de l'autora o autor o col·lecció."></textarea>
+	<textarea name="desc" class="form-control" rows="5" id="comment" placeholder="Breu descripció o biografia de l'autora, autor o col·lecció."></textarea>
       </div>
       <br />
       
@@ -44,3 +44,43 @@
   </div>
 </div>
 <!-- FIN form_afegir -->
+<!-- INI ale_1 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Nom no vàlid.
+  </div>
+</div>
+<!-- FIN ale_1 -->
+<!-- INI ale_2 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Descripció no vàlida.
+  </div>
+</div>
+<!-- FIN ale_2 -->
+<!-- INI ale_3 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    Ja existeix una autora, autor o col·lecció amb aquest nom.
+  </div>
+</div>
+<!-- FIN ale_3 -->
+<!-- INI ale_4 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    No es pot generar un codi per el nom introduït.
+  </div>
+</div>
+<!-- FIN ale_4 -->
+<!-- INI ale_5 -->
+<div class="container">
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    No s'ha pogut insertar en la base de dades.
+  </div>
+</div>
+<!-- FIN ale_5 -->

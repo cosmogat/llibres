@@ -290,4 +290,22 @@ class Consulta {
         $sql = "INSERT INTO Subsubclassificacio (subclassi, nom, codi) VALUES (" . $cla . ", '" . $cat . "' , " . $num . ")";
         return $sql;
     }
+
+    static public function exisAutor_perNom($nom) {
+        $sql = "SELECT COUNT(*) FROM Escriptor WHERE autor = '" . $nom . "'";
+        return $sql;
+    }
+    
+    static public function exisAutor_perCodi($codi) {
+        $sql = "SELECT COUNT(*) FROM Escriptor WHERE codi = '" . $codi . "'";
+        return $sql;
+    }
+    static public function insertAutor($codi, $nom, $colleccio, $bio) {
+        if (trim($bio) == "")
+            $sql = "INSERT INTO Escriptor (autor, codi, es_colleccio) VALUES ('" . $nom . "', '" . $codi . "' , " . $colleccio . ")";
+        else
+            $sql = "INSERT INTO Escriptor (autor, codi, es_colleccio, biografia) VALUES ('" . $nom . "', '" . $codi . "' , " . $colleccio . ", '" . $bio . "')";
+        return $sql;
+    }
+    
 }

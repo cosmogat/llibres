@@ -300,6 +300,7 @@ class Consulta {
         $sql = "SELECT COUNT(*) FROM Escriptor WHERE codi = '" . $codi . "'";
         return $sql;
     }
+    
     static public function insertAutor($codi, $nom, $colleccio, $bio) {
         if (trim($bio) == "")
             $sql = "INSERT INTO Escriptor (autor, codi, es_colleccio) VALUES ('" . $nom . "', '" . $codi . "' , " . $colleccio . ")";
@@ -308,4 +309,8 @@ class Consulta {
         return $sql;
     }
     
+    static public function idautor_perCodi($codi) {
+        $sql = "SELECT idescriptor FROM Escriptor WHERE codi = '" . $codi . "'";
+        return $sql;
+    }
 }

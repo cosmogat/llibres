@@ -49,17 +49,17 @@ class LlocModautors {
                         $this->alert = 4;
                 }
             }
-            if ($this->alert == 0) {
+            if ($this->alert == 0)
                 if (!BaseDades::consulta(Consulta::insertAutor($codi_autor, $nom, $colleccio, $des)))
                     $this->alert = 5;
-            }
 
-            
-            $vec_puj = $_FILES["foto"];
-            /* if ((trim($vec_puj["name"]) != "") and ($vec_puj["name"] == 0)) */
-            /*     echo "si"; */
-            /* else */
-            /*     echo "no"; */
+            if ($this->alert == 0) {
+                $vec_puj = $_FILES["foto"];
+                /* if ((trim($vec_puj["name"]) != "") and ($vec_puj["name"] == 0)) */
+                /*     echo "si"; */
+                /* else */
+                /*     echo "no"; */
+            }
         }
     }
 

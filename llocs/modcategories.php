@@ -17,8 +17,6 @@ class LlocModcategories {
     public $nom_cat = "";
     public $tipus = -1;
     public $alert = 0;
-
-    public $af_defecte = -1;
     
     public function calculs() {
         $opc = Peticio::obte("op");

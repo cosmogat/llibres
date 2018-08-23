@@ -26,13 +26,15 @@ class LlocLlibres {
             $v = BaseDades::consVector(Consulta::llibre_perEtiqueta($pro, $cla, $aut, $num))[0];
             if (count($v) != 0)
                 array_push($this->llib, $pro . "-" . $cla . "-" . $aut . "-" . $num, $v[0], $v[1], $v[2], $v[3], $v[4], $v[5], $v[6], $v[7], $v[8], $v[9], $v[10], $v[11], $v[12], $v[13], $v[14], $v[15]);
+            for ($ind = 0; $ind < count($this->llib); $ind++)
+                $this->llib[$ind] = descodCad($this->llib[$ind]);
         }
         
         if (count($this->llib) > 0) {
             $this->nomweb = $this->nomweb . $this->llib[5] . " - " . $this->llib[7];
             $id_us = Usuari::idusuari();
             if ($id_us != -1)
-                $this->crit = BaseDades::consVector(Consulta::critiques($id_us, $this->llib[4]))[0];
+                $this->crit = descodCad(BaseDades::consVector(Consulta::critiques($id_us, $this->llib[4]))[0]);
             $this->molles[] = array(Link::url("index"), icona_bootstrap("home"));
             $this->molles[] = array(Link::url("categories"), "Categories");
             for ($i = 1; $i <= 3; $i++)

@@ -22,6 +22,18 @@ function cadValid($cad) {
     return true;
 }
 
+function codCad($cad) {
+    $orig = array("'", "\"", "@", "(", ")","&", "¡", "!", "¿", "\$", "€", "%",  ";", "º", "ª", "·", "<br />", "<li>", "<ol>", "<ul>", "</li>", "</ol>", "</ul>", "<strong>", "<em>", "<del>", "</strong>", "</em>", "</del>");
+    $nous = array(":_cometa_:", ":_cometes_:", ":_arroba_:", ":_parent_obert_:", ":_parent_tancat_:", ":_amper_:", ":_excl_obert_:", ":_excl_tancat_:", ":_inte_obert_:", ":_dolar_:", ":_euro_:", ":_100_:", ":_puntcoma_:", ":_ooo_:", ":_aaa_:", ":_puntet_:", ":_br /_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_strong_:", ":_em_:", ":_del_:", ":_/strong_:", ":_/em_:", ":_/del_:");
+    return str_replace($orig, $nous, $cad);
+}
+
+function descodCad($cad) {
+    $orig = array("'", "\"", "@", "(", ")","&", "¡", "!", "¿", "\$", "€", "%",  ";", "º", "ª", "·", "<br />", "<li>", "<ol>", "<ul>", "</li>", "</ol>", "</ul>", "<strong>", "<em>", "<del>", "</strong>", "</em>", "</del>");
+    $nous = array(":_cometa_:", ":_cometes_:", ":_arroba_:", ":_parent_obert_:", ":_parent_tancat_:", ":_amper_:", ":_excl_obert_:", ":_excl_tancat_:", ":_inte_obert_:", ":_dolar_:", ":_euro_:", ":_100_:", ":_puntcoma_:", ":_ooo_:", ":_aaa_:", ":_puntet_:", ":_br /_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_strong_:", ":_em_:", ":_del_:", ":_/strong_:", ":_/em_:", ":_/del_:");
+    return str_replace($nous, $orig, $cad);
+}
+
 function connexio_valida() {
     $tipus = Registre::lleg("conne");
     $igual = Registre::lleg("adr_r") == Registre::lleg("adr_s");
@@ -134,32 +146,37 @@ function generarEtiqueta($nom) {
     // Tres primeres lletres de la segona paraula
     if ((sizeof($vector) > 1) and (strlen($vector[1]) > 2)) {
         $prova = strtoupper(substr($vector[1], 0, 3));
-        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
-            return $prova;
+        if (preg_match("/^[A-Z]{3}$/", $prova))
+            if (BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0)
+                return $prova;
     }
     // Primera lletra de la primera paraula + dos primeres lletres de la segona paraula
     if ((sizeof($vector) > 1) and (strlen($vector[1]) > 2)) {
         $prova = strtoupper(substr($vector[0], 0, 1)) . strtoupper(substr($vector[1], 0, 2));
-        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
-            return $prova;
+        if (preg_match("/^[A-Z]{3}$/", $prova))
+            if (BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0)
+                return $prova;
     }
     // Tres primeres lletres de l'última paraula
     if ((sizeof($vector) > 0) and (strlen($vector[sizeof($vector) - 1]) > 2)) {
         $prova = strtoupper(substr($vector[sizeof($vector) - 1], 0, 3));
-        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
-            return $prova;
+        if (preg_match("/^[A-Z]{3}$/", $prova))
+            if (BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) 
+                return $prova;
     }
     // Dos primeres lletres de la primera paraula + primera lletra de la segona paraula
     if ((sizeof($vector) > 0) and (strlen($vector[0]) > 2)) {
         $prova = strtoupper(substr($vector[0], 0, 2)) . strtoupper(substr($vector[1], 0, 1));
-        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
-            return $prova;
+        if (preg_match("/^[A-Z]{3}$/", $prova))
+            if (BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0)
+                return $prova;
     }
     // Primera lletra de les tres primeres paraules
     if (sizeof($vector) > 2) {
         $prova = strtoupper($vector[0][0] . $vector[1][0] . $vector[2][0]);
-        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
-            return $prova;
+        if (preg_match("/^[A-Z]{3}$/", $prova))
+            if (BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) 
+                return $prova;
     }
     // Amb números
     if ((sizeof($vector) > 0) and (strlen($vector[sizeof($vector) - 1]) > 2))
@@ -200,7 +217,7 @@ function pujarFoto($vec_info, $id, $tipus) {
     $nom_desti = $id . "." . $ext;
     $ruta_desti = Registre::lleg("direc") . "/img/" . ($tipus == 0 ? "autors" : "llibres") . "/" . $nom_desti;
     if (move_uploaded_file($vec_info["tmp_name"], $ruta_desti)) {
-        if (BaseDades::consulta(Consulta::canvAutorFoto($id, $nom_desti)))          
+        if (BaseDades::consulta(Consulta::canvAutorFoto($id, $nom_desti)))   // açò hi haura que adaptarlo per a llibres       
             return 1;
         else
             return -4;

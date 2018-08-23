@@ -13,7 +13,8 @@ class LlocModautors {
     public $css = array();
     
     public $alert = 0;
-
+    public $autor = array();
+    
     public function calculs() {
         $opc = Peticio::obte("op");
         if ($opc == "af") {
@@ -59,16 +60,18 @@ class LlocModautors {
                     $id_escr = BaseDades::consVector(Consulta::idautor_perCodi($codi_autor))[0][0];
                     $err_foto = pujarFoto($vec_puj, $id_escr, 0);
                     $this->alert = abs($err_foto - 8);
-                    /* if ($err_foto == 1) */
-                    /*     $this->alert = 7; */
-                    /* else if ($err_foto == 0) */
-                    /*     $this->alert = 8; */
-                    /* else if ($err_foto == -1) */
-                    /*     $this->alert = 9; */
                 }
                 else
                     $this->alert = 6;
             }
+        }
+        if ($this->mod == 1) {
+            $codi = Peticio::obte("cat");
+            $vector = BaseDades::consVector(Consulta::autor($codi));
+            if (count($vector) > 0)
+                $this->autor = $vector[0];
+            else
+                redireccionar(Link::url("index"));
         }
     }
 
@@ -78,8 +81,18 @@ class LlocModautors {
             $tpl->carregar("modautors");
             $tpl->mostrar("form_afegir");
             $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-autors", Peticio::obte("cat")));
-            $tpl->set("ACCIO", "Afegir");
-            $tpl->set("BOTO", "success");
+            $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
+            $tpl->imprimir();
+        }
+        else if ($this->mod == 1) {
+            $tpl->carregar("modautors");
+            $tpl->mostrar("form_editar");
+            $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-autors", Peticio::obte("cat")));
+            $tpl->set("NOM", descodCad($this->autor[1]));
+            $tpl->set("CODI", $this->autor[2]);
+            $tpl->set("COL", $this->autor[5] == 0 ? "" : "checked");
+            $tpl->set("DESC", descodCad($this->autor[4]));
+            $tpl->set("TORNAR", Link::url("autors", Peticio::obte("cat")));
             $tpl->imprimir();
         }
         if ($this->alert != 0)

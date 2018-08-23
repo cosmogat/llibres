@@ -233,7 +233,7 @@ class Consulta {
     }
 
     static public function autor($codi) {
-        $sql ="SELECT idescriptor AS c00, autor AS c01, codi AS c02, img_dir AS c03, biografia AS c04 FROM Escriptor WHERE codi = '" . $codi . "'";
+        $sql ="SELECT idescriptor AS c00, autor AS c01, codi AS c02, img_dir AS c03, biografia AS c04 , es_colleccio AS c05 FROM Escriptor WHERE codi = '" . $codi . "'";
         return $sql;
     }
 

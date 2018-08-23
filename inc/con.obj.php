@@ -313,4 +313,9 @@ class Consulta {
         $sql = "SELECT idescriptor FROM Escriptor WHERE codi = '" . $codi . "'";
         return $sql;
     }
+
+    static public function canvAutorFoto($id, $ruta_foto) {
+        $sql = "UPDATE Escriptor SET img_dir = '" . $ruta_foto . "' WHERE idescriptor = " . intval($id);
+        return $sql;
+    }
 }

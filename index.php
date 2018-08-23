@@ -22,6 +22,7 @@ Registre::afeg("bd_ho", $conf["bd"]["host"]);
 Registre::afeg("bd_bd", $conf["bd"]["bdad"]);
 Registre::afeg("bd_en", $conf["bd"]["enco"]);
 Registre::afeg("url_b", $conf["in"]["host"]);
+Registre::afeg("direc", $conf["in"]["dire"]);
 Registre::afeg("conne", $conf["in"]["conn"]);
 Registre::afeg("depur", $conf["in"]["depu"]);
 Registre::afeg("refer", $_SERVER["HTTP_REFERER"]);

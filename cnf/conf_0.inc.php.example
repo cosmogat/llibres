@@ -13,6 +13,7 @@ $conf["bd"]["enco"] = true;
 // codificar les eixides de la base de dades a utf-8
 
 $conf["in"]["host"] = "http://www.llibresdomain.org";
+$conf["in"]["dire"] = "/var/www/llibres";
 $conf["in"]["depu"] = false;
 $conf["in"]["conn"] = 1;
 // tipus de connexions acceptades:

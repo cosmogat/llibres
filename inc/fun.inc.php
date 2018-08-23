@@ -127,3 +127,85 @@ function imprVec($vec) {
     print_r($vec);
     echo "</pre>";
 }
+
+function generarEtiqueta($nom) {
+    $vector = explode(" ", $nom);
+    $prova = "e00";
+    // Tres primeres lletres de la segona paraula
+    if ((sizeof($vector) > 1) and (strlen($vector[1]) > 2)) {
+        $prova = strtoupper(substr($vector[1], 0, 3));
+        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
+            return $prova;
+    }
+    // Primera lletra de la primera paraula + dos primeres lletres de la segona paraula
+    if ((sizeof($vector) > 1) and (strlen($vector[1]) > 2)) {
+        $prova = strtoupper(substr($vector[0], 0, 1)) . strtoupper(substr($vector[1], 0, 2));
+        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
+            return $prova;
+    }
+    // Tres primeres lletres de l'última paraula
+    if ((sizeof($vector) > 0) and (strlen($vector[sizeof($vector) - 1]) > 2)) {
+        $prova = strtoupper(substr($vector[sizeof($vector) - 1], 0, 3));
+        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
+            return $prova;
+    }
+    // Dos primeres lletres de la primera paraula + primera lletra de la segona paraula
+    if ((sizeof($vector) > 0) and (strlen($vector[0]) > 2)) {
+        $prova = strtoupper(substr($vector[0], 0, 2)) . strtoupper(substr($vector[1], 0, 1));
+        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
+            return $prova;
+    }
+    // Primera lletra de les tres primeres paraules
+    if (sizeof($vector) > 2) {
+        $prova = strtoupper($vector[0][0] . $vector[1][0] . $vector[2][0]);
+        if ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0) and (preg_match("/^[A-Z]{3}$/", $prova)))
+            return $prova;
+    }
+    // Amb números
+    if ((sizeof($vector) > 0) and (strlen($vector[sizeof($vector) - 1]) > 2))
+        $prova = strtoupper(substr($vector[sizeof($vector) - 1], 0, 3));
+    else 
+        $prova = "AAA";
+    if (!preg_match("/^[A-Z]{3}$/", $prova))
+        $prova = "AAA";
+    $num = 0;
+    $num_cad = sprintf("%02d", $num);
+    $nom = $prova;
+    $prova = $nom . $num_cad;
+    while ((BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] != 0) and ($num < 100)) {
+        $num++;
+        $num_cad = sprintf("%02d", $num);
+        $prova = $nom . $num_cad;
+    }
+    if ($num < 100)
+        return $prova;
+    // error
+    return "e00";
+}
+
+function pujarFoto($vec_info, $id, $tipus) {
+    $ext = "";
+    if ($vec_info["type"] == "image/jpeg")
+        $ext = "jpg";
+    else if ($vec_info["type"] == "image/png")
+        $ext = "png";
+    else if ($vec_info["type"] == "image/svg+xml")
+        $ext = "svg";
+    else
+        return 0;
+    if (($vec_info["size"] > 1073741824) or ($vec_info["size"] < 10))
+        return -1;
+    if (!is_uploaded_file($vec_info['tmp_name']))
+        return -2;
+    $nom_desti = $id . "." . $ext;
+    $ruta_desti = Registre::lleg("direc") . "/img/" . ($tipus == 0 ? "autors" : "llibres") . "/" . $nom_desti;
+    if (move_uploaded_file($vec_info["tmp_name"], $ruta_desti)) {
+        if (BaseDades::consulta(Consulta::canvAutorFoto($id, $nom_desti)))          
+            return 1;
+        else
+            return -4;
+    }
+    else
+        return -3;
+    return -5;
+}

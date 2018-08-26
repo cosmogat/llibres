@@ -308,6 +308,14 @@ class Consulta {
             $sql = "INSERT INTO Escriptor (autor, codi, es_colleccio, biografia) VALUES ('" . $nom . "', '" . $codi . "' , " . $colleccio . ", '" . $bio . "')";
         return $sql;
     }
+
+    static public function editAutor($id, $codi, $nom, $colleccio, $bio) {
+        if (trim($bio) == "")
+            $sql = "UPDATE Escriptor SET autor = '" . $nom . "', codi = '" . $codi . "', es_colleccio = '" . $colleccio . "' WHERE idescriptor = " . $id;
+        else            
+            $sql = "UPDATE Escriptor SET autor = '" . $nom . "', codi = '" . $codi . "', es_colleccio = '" . $colleccio . "', biografia = '" . $bio . "' WHERE idescriptor = " . $id;
+        return $sql;
+    }
     
     static public function idautor_perCodi($codi) {
         $sql = "SELECT idescriptor FROM Escriptor WHERE codi = '" . $codi . "'";

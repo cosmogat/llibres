@@ -22,6 +22,17 @@ function cadValid($cad) {
     return true;
 }
 
+function codiValid($codi) {
+    if (strlen($codi) == 3)
+        return preg_match("/^[A-Z]{3}$/", $codi);
+    else if (strlen($codi) == 5) {
+        $part1 = $codi[0] . $codi[1] . $codi[2];
+        $part2 = $codi[3] . $codi[4];
+        return (preg_match("/^[A-Z]{3}$/", $part1)) and (preg_match("/^[0-9]{2}$/", $part2));
+    }
+    return false;
+}
+
 function codCad($cad) {
     $orig = array("'", "\"", "@", "(", ")","&", "¡", "!", "¿", "\$", "€", "%",  ";", "º", "ª", "·", "<br />", "<li>", "<ol>", "<ul>", "</li>", "</ol>", "</ul>", "<strong>", "<em>", "<del>", "</strong>", "</em>", "</del>");
     $nous = array(":_cometa_:", ":_cometes_:", ":_arroba_:", ":_parent_obert_:", ":_parent_tancat_:", ":_amper_:", ":_excl_obert_:", ":_excl_tancat_:", ":_inte_obert_:", ":_dolar_:", ":_euro_:", ":_100_:", ":_puntcoma_:", ":_ooo_:", ":_aaa_:", ":_puntet_:", ":_br /_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_strong_:", ":_em_:", ":_del_:", ":_/strong_:", ":_/em_:", ":_/del_:");
@@ -165,7 +176,7 @@ function generarEtiqueta($nom) {
                 return $prova;
     }
     // Dos primeres lletres de la primera paraula + primera lletra de la segona paraula
-    if ((sizeof($vector) > 0) and (strlen($vector[0]) > 2)) {
+    if ((sizeof($vector) > 1) and (strlen($vector[0]) > 2)) {
         $prova = strtoupper(substr($vector[0], 0, 2)) . strtoupper(substr($vector[1], 0, 1));
         if (preg_match("/^[A-Z]{3}$/", $prova))
             if (BaseDades::consVector(Consulta::exisAutor_perCodi($prova))[0][0] == 0)
@@ -210,14 +221,19 @@ function pujarFoto($vec_info, $id, $tipus) {
         $ext = "svg";
     else
         return 0;
-    if (($vec_info["size"] > 1073741824) or ($vec_info["size"] < 10))
+    if (($vec_info["size"] > 10485760) or ($vec_info["size"] < 10))
         return -1;
     if (!is_uploaded_file($vec_info['tmp_name']))
         return -2;
     $nom_desti = $id . "." . $ext;
     $ruta_desti = Registre::lleg("direc") . "/img/" . ($tipus == 0 ? "autors" : "llibres") . "/" . $nom_desti;
+    $sql = "";
+    if ($tipus == 0)
+        $sql = Consulta::canvAutorFoto($id, $nom_desti);
+    else
+        $sql = ""; // açò hi haura que adaptarlo per a llibres       
     if (move_uploaded_file($vec_info["tmp_name"], $ruta_desti)) {
-        if (BaseDades::consulta(Consulta::canvAutorFoto($id, $nom_desti)))   // açò hi haura que adaptarlo per a llibres       
+        if (BaseDades::consulta($sql))
             return 1;
         else
             return -4;
@@ -225,4 +241,9 @@ function pujarFoto($vec_info, $id, $tipus) {
     else
         return -3;
     return -5;
+}
+
+function eliminarFoto($nom_fitxer, $tipus) {
+    $ruta_desti = Registre::lleg("direc") . "/img/" . ($tipus == 0 ? "autors" : "llibres") . "/" . $nom_fitxer;
+    return unlink($ruta_desti);
 }

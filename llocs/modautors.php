@@ -30,8 +30,8 @@ class LlocModautors {
             redireccionar(Link::url("index"));
 
         if (($this->mod == 0)  and (Peticio::exis("afegir"))) {
-            $nom = ucwords(Peticio::obte("nom"));
-            $des = Peticio::obte("desc");
+            $nom = codCad(ucwords(Peticio::obte("nom")));
+            $des = codCad(Peticio::obte("desc"));
             $colleccio = 0;
             $codi_autor = "";
             if (Peticio::exis("col"))
@@ -56,7 +56,7 @@ class LlocModautors {
 
             if ($this->alert == 0) {
                 $vec_puj = $_FILES["foto"];
-                if ((trim($vec_puj["name"]) != "") and ($vec_puj["name"] == 0)) {
+                if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0)) {
                     $id_escr = BaseDades::consVector(Consulta::idautor_perCodi($codi_autor))[0][0];
                     $err_foto = pujarFoto($vec_puj, $id_escr, 0);
                     $this->alert = abs($err_foto - 8);
@@ -66,10 +66,54 @@ class LlocModautors {
             }
         }
         if ($this->mod == 1) {
-            $codi = Peticio::obte("cat");
-            $vector = BaseDades::consVector(Consulta::autor($codi));
-            if (count($vector) > 0)
+            $codi_vell = Peticio::obte("cat");
+            $vector = BaseDades::consVector(Consulta::autor($codi_vell));
+            if (count($vector) > 0) {
                 $this->autor = $vector[0];
+                $this->autor[1] = descodCad($this->autor[1]);
+                $this->autor[4] = descodCad($this->autor[4]);
+                if (Peticio::exis("afegir")) {
+                    $nom = codCad(ucwords(Peticio::obte("nom")));
+                    $des = codCad(Peticio::obte("desc"));
+                    $colleccio = 0;
+                    $codi_nou = Peticio::obte("cod");
+                    $id_escr = BaseDades::consVector(Consulta::idautor_perCodi($codi_vell))[0][0];
+                    if (Peticio::exis("col"))
+                        $colleccio = 1;            
+                    if (!cadValid($nom) or trim($nom) == "")
+                        $this->alert = 1;
+                    else if (!cadValid($des))
+                        $this->alert = 2;
+                    else if (!codiValid($codi_nou))
+                        $this->alert = 14;
+                    if ($this->alert == 0) {
+                        $exis_nom = BaseDades::consVector(Consulta::exisAutor_perNom($nom));
+                        if (($exis_nom[0][0] != 0) and ($nom != codCad($this->autor[1])))
+                            $this->alert = 3;
+                        else if ($codi_vell != $codi_nou) {
+                            $exis_codi = BaseDades::consVector(Consulta::exisAutor_perCodi($codi_nou));
+                            if ($exis_codi[0][0] != 0)
+                                $this->alert = 15;
+                        }
+                    }
+                    if ($this->alert == 0) {
+                        if (!BaseDades::consulta(Consulta::editAutor($id_escr, $codi_nou, $nom, $colleccio, $des)))
+                            $this->alert = 5;                   
+                    }
+                    if ($this->alert == 0) {
+                        $vec_puj = $_FILES["foto"];
+                        if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0)) {
+                            $err_foto = pujarFoto($vec_puj, $id_escr, 0);
+                            $this->alert = abs($err_foto - 8);
+                            if ($err_foto == 1) {
+                                //eliminarFoto($this->autor[3], 0);
+                            }
+                        }
+                    }
+                    if ($this->alert == 0)
+                        redireccionar(Link::url("ed-autors", $codi_nou));
+                }
+            }
             else
                 redireccionar(Link::url("index"));
         }
@@ -88,10 +132,10 @@ class LlocModautors {
             $tpl->carregar("modautors");
             $tpl->mostrar("form_editar");
             $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-autors", Peticio::obte("cat")));
-            $tpl->set("NOM", descodCad($this->autor[1]));
+            $tpl->set("NOM", $this->autor[1]);
             $tpl->set("CODI", $this->autor[2]);
             $tpl->set("COL", $this->autor[5] == 0 ? "" : "checked");
-            $tpl->set("DESC", descodCad($this->autor[4]));
+            $tpl->set("DESC", $this->autor[4]);
             $tpl->set("TORNAR", Link::url("autors", Peticio::obte("cat")));
             $tpl->imprimir();
         }

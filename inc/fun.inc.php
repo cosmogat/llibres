@@ -35,13 +35,13 @@ function codiValid($codi) {
 
 function codCad($cad) {
     $orig = array("'", "\"", "@", "(", ")","&", "¡", "!", "¿", "\$", "€", "%",  ";", "º", "ª", "·", "<br />", "<li>", "<ol>", "<ul>", "</li>", "</ol>", "</ul>", "<strong>", "<em>", "<del>", "</strong>", "</em>", "</del>");
-    $nous = array(":_cometa_:", ":_cometes_:", ":_arroba_:", ":_parent_obert_:", ":_parent_tancat_:", ":_amper_:", ":_excl_obert_:", ":_excl_tancat_:", ":_inte_obert_:", ":_dolar_:", ":_euro_:", ":_100_:", ":_puntcoma_:", ":_ooo_:", ":_aaa_:", ":_puntet_:", ":_br /_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_strong_:", ":_em_:", ":_del_:", ":_/strong_:", ":_/em_:", ":_/del_:");
+    $nous = array(":_c_:", ":_cc_:", ":_a_:", ":_po_:", ":_pt_:", ":_am_:", ":_eo_:", ":_et_:", ":_io_:", ":_d_:", ":_e_:", ":_1_:", ":_pc_:", ":_oo_:", ":_aa_:", ":_p_:", ":_br_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_st_:", ":_em_:", ":_de_:", ":_/st_:", ":_/em_:", ":_/de_:");
     return str_replace($orig, $nous, $cad);
 }
 
 function descodCad($cad) {
     $orig = array("'", "\"", "@", "(", ")","&", "¡", "!", "¿", "\$", "€", "%",  ";", "º", "ª", "·", "<br />", "<li>", "<ol>", "<ul>", "</li>", "</ol>", "</ul>", "<strong>", "<em>", "<del>", "</strong>", "</em>", "</del>");
-    $nous = array(":_cometa_:", ":_cometes_:", ":_arroba_:", ":_parent_obert_:", ":_parent_tancat_:", ":_amper_:", ":_excl_obert_:", ":_excl_tancat_:", ":_inte_obert_:", ":_dolar_:", ":_euro_:", ":_100_:", ":_puntcoma_:", ":_ooo_:", ":_aaa_:", ":_puntet_:", ":_br /_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_strong_:", ":_em_:", ":_del_:", ":_/strong_:", ":_/em_:", ":_/del_:");
+    $nous = array(":_c_:", ":_cc_:", ":_a_:", ":_po_:", ":_pt_:", ":_am_:", ":_eo_:", ":_et_:", ":_io_:", ":_d_:", ":_e_:", ":_1_:", ":_pc_:", ":_oo_:", ":_aa_:", ":_p_:", ":_br_:", ":_li_:", ":_ol_:", ":_ul_:", ":_/li_:", ":_/ol_:", ":_/ul_:", ":_st_:", ":_em_:", ":_de_:", ":_/st_:", ":_/em_:", ":_/de_:");
     return str_replace($nous, $orig, $cad);
 }
 

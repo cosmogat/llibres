@@ -16,17 +16,8 @@ class LlocModautors {
     public $autor = array();
     
     public function calculs() {
-        $opc = Peticio::obte("op");
-        if ($opc == "af") {
-            $this->mod = 0;
-            if (Peticio::obte("cat") != "AAA00")
-                redireccionar(Link::url("af-autors", "AAA00")); 
-        }
-        else if ($opc == "ed")
-            $this->mod = 1;
-        else if ($opc == "el")
-            $this->mod = 2;
-        else
+        $this->mod = intval(Peticio::obte("mode"));
+        if (!preg_match("/^[0-2]$/", $this->mod))
             redireccionar(Link::url("index"));
 
         if (($this->mod == 0)  and (Peticio::exis("afegir"))) {
@@ -66,7 +57,9 @@ class LlocModautors {
             }
         }
         if ($this->mod == 1) {
-            $codi_vell = Peticio::obte("cat");
+            $codi_vell = Peticio::obte("codi");
+            if (!codiValid($codi_vell))
+                redireccionar(Link::url("index"));
             $vector = BaseDades::consVector(Consulta::autor($codi_vell));
             if (count($vector) > 0) {
                 $this->autor = $vector[0];
@@ -124,22 +117,23 @@ class LlocModautors {
         if ($this->mod == 0) {
             $tpl->carregar("modautors");
             $tpl->mostrar("form_afegir");
-            $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-autors", Peticio::obte("cat")));
+            $tpl->set("ACTION", Link::url("afegir-autors"));
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();
         }
         else if ($this->mod == 1) {
             $tpl->carregar("modautors");
             $tpl->mostrar("form_editar");
-            $tpl->set("ACTION", Link::url(Peticio::obte("op"). "-autors", Peticio::obte("cat")));
+            $tpl->set("ACTION", Link::url("editar-autors", Peticio::obte("codi")));
             $tpl->set("NOM", $this->autor[1]);
             $tpl->set("CODI", $this->autor[2]);
             $tpl->set("COL", $this->autor[5] == 0 ? "" : "checked");
             $tpl->set("DESC", $this->autor[4]);
-            $tpl->set("TORNAR", Link::url("autors", Peticio::obte("cat")));
+            $tpl->set("TORNAR", Link::url("autors", Peticio::obte("codi")));
             $tpl->imprimir();
         }
         if ($this->alert != 0)
             $tpl->carregarMostrar("modautors", "ale_" . $this->alert);
+        Peticio::impr();
     }
 }

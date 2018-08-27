@@ -141,8 +141,5 @@ class LlocModautors {
         }
         if ($this->alert != 0)
             $tpl->carregarMostrar("modautors", "ale_" . $this->alert);
-               
-        Peticio::impr();
-        imprVec($_FILES);
     }
 }

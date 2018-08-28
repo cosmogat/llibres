@@ -326,4 +326,9 @@ class Consulta {
         $sql = "UPDATE Escriptor SET img_dir = '" . $ruta_foto . "' WHERE idescriptor = " . intval($id);
         return $sql;
     }
+
+    static public function idiomes() {
+        $sql = "SELECT * FROM Idiomes";
+        return $sql;
+    }
 }

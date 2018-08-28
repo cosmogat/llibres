@@ -1,4 +1,4 @@
-<!-- INI form_afegir -->
+<!-- INI form_afegir_1 -->
 <div class="container">
   <div class="col-md-3"></div>
   <div class="col-md-6">
@@ -11,10 +11,10 @@
       </div>
       <br />
       
-      <label for="nom_aut">Nom complet de l'autora, autor o col·lecció</label>
+      <label for="nom_aut">Nom de l'autora o autor o col·lecció</label>
       <div class="input-group autocomplete">
 	<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="autor" type="text" class="form-control" placeholder="Nom i cognoms o nom de la col·lecció" id="nom_aut" aria-describedby="basic-addon2">
+	<input name="autor" type="text" class="form-control" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut" aria-describedby="basic-addon2">
       </div>
       <br />
       
@@ -58,10 +58,13 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon6"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="idio" class="form-control" id="sel4" aria-describedby="basic-addon6">
-	   <option>1</option>
-	   <option>2</option>
-	   <option>3</option>
-	   <option>4</option>
+	   <!-- FIN form_afegir_1 -->
+	   <!-- INI idi_desp -->
+	   <!-- INI idi_el -->
+	   <option value="{IDI_COD}">{IDI_NOM}</option>
+	   <!-- FIN idi_el -->
+	   <!-- FIN idi_desp -->
+	   <!-- INI form_afegir_2 -->
 	 </select>	 
       </div>     
       <br />
@@ -97,7 +100,7 @@
       <label for="data_c">Data de compra</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon11"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="data" type="text" class="form-control"  placeholder="dia/mes/any" id="nom_aut" aria-describedby="basic-addon11">
+	<input name="data" type="text" class="form-control"  placeholder="dia/mes/any" id="data_compra" aria-describedby="basic-addon11">
       </div>
       <br />
 
@@ -108,17 +111,10 @@
       </div>
       <br />
 
-      <label for="usu_pro">Usuari propietari</label>
-      <div class="input-group">
-	<span class="input-group-addon" id="basic-addon13"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="prop" type="text" class="form-control"  placeholder="Propietari d'aquest llibre" id="nom_aut" aria-describedby="basic-addon13">
-      </div>
-      <br />   
-
       <label for="num_pag">Número de pàgines</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon14"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="pagi" type="text" class="form-control"  placeholder="Número de pàgines del llibre" id="nom_aut" aria-describedby="basic-addon14">
+	<input name="pagi" type="date" class="form-control"  placeholder="Número de pàgines del llibre" id="nom_aut" aria-describedby="basic-addon14">
       </div>
       <br /> 
       
@@ -152,4 +148,4 @@
     <hr />
   </div>
 </div>
-<!-- FIN form_afegir -->
+<!-- FIN form_afegir_2 -->

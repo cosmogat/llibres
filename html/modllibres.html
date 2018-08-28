@@ -13,12 +13,115 @@
       
       <label for="nom_aut">Nom complet de l'autora, autor o col·lecció</label>
       <div class="input-group">
-	<span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	<input name="autor" type="text" class="form-control"  placeholder="Nom i cognoms o nom de la col·lecció" id="nom_aut" aria-describedby="basic-addon1">
       </div>
       <br />
       
+      <label for="cat">Categoria</label>
+       <div class="input-group">
+	 <span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	 <select name="cat" class="form-control" id="sel1" aria-describedby="basic-addon3">
+	   <option>1</option>
+	   <option>2</option>
+	   <option>3</option>
+	   <option>4</option>
+	 </select>	 
+      </div>     
+      <br />
 
+      <label for="subcat">Subcategoria</label>
+       <div class="input-group">
+	 <span class="input-group-addon" id="basic-addon4"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	 <select name="subcat" class="form-control" id="sel2" aria-describedby="basic-addon4">
+	   <option>1</option>
+	   <option>2</option>
+	   <option>3</option>
+	   <option>4</option>
+	 </select>	 
+      </div>   
+       <br />
+       
+       <label for="subsubcat">Subsubcategoria</label>
+       <div class="input-group">
+	 <span class="input-group-addon" id="basic-addon5"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	 <select name="subsubcat" class="form-control" id="sel3" aria-describedby="basic-addon5">
+	   <option>1</option>
+	   <option>2</option>
+	   <option>3</option>
+	   <option>4</option>
+	 </select>	 
+       </div>  
+       <br />
+
+      <label for="idi">Idioma</label>
+       <div class="input-group">
+	 <span class="input-group-addon" id="basic-addon6"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	 <select name="idio" class="form-control" id="sel4" aria-describedby="basic-addon6">
+	   <option>1</option>
+	   <option>2</option>
+	   <option>3</option>
+	   <option>4</option>
+	 </select>	 
+      </div>     
+      <br />
+
+      <label for="nom_edit">Editorial</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon7"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="edit" type="text" class="form-control"  placeholder="Nom de l'editorial" id="nom_aut" aria-describedby="basic-addon7">
+      </div>
+      <br />
+
+      <label for="isb">ISBN</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon8"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="isbn" type="text" class="form-control"  placeholder="ISBN" id="nom_aut" aria-describedby="basic-addon8">
+      </div>
+      <br />
+
+      <label for="any_pu">Any de publicació</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon9"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="any" type="text" class="form-control"  placeholder="1449" id="nom_aut" aria-describedby="basic-addon9">
+      </div>
+      <br />
+
+      <label for="any_ed">Any d'aquesta edició</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon10"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="anye" type="text" class="form-control"  placeholder="1449" id="nom_aut" aria-describedby="basic-addon10">
+      </div>
+      <br />
+
+      <label for="data_c">Data de compra</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon11"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="data" type="text" class="form-control"  placeholder="dia/mes/any" id="nom_aut" aria-describedby="basic-addon11">
+      </div>
+      <br />
+
+      <label for="lloc_c">Lloc de compra</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon12"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="lloc" type="text" class="form-control"  placeholder="Nom complet del lloc on es va realitzar l'adquisició d'aquest llibre" id="nom_aut" aria-describedby="basic-addon12">
+      </div>
+      <br />
+
+      <label for="usu_pro">Usuari propietari</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon13"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="prop" type="text" class="form-control"  placeholder="Propietari d'aquest llibre" id="nom_aut" aria-describedby="basic-addon13">
+      </div>
+      <br />   
+
+      <label for="num_pag">Número de pàgines</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon14"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="pagi" type="text" class="form-control"  placeholder="Número de pàgines del llibre" id="nom_aut" aria-describedby="basic-addon14">
+      </div>
+      <br /> 
+      
       <div class="form-group">
 	<label for="imatge">Fotografia o imatge</label>
 	<input name="foto" type="file" class="form-control-file" id="imatge" accept="image/*">
@@ -28,7 +131,7 @@
       <br /><small>Etiquetes html permeses: &lt;br /&gt;,  &lt;ul&gt;, &lt;li&gt;, &lt;ol&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;del&gt; i els seus tancaments. </small>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<textarea name="desc" class="form-control" rows="5" id="comment" placeholder="Breu descripció o biografia de l'autora, autor o col·lecció."></textarea>
+	<textarea name="desc" class="form-control" rows="5" id="comment" placeholder="Breu descripció d'aquest llibre."></textarea>
       </div>
       <br />
       

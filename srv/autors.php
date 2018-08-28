@@ -2,23 +2,7 @@
 // 28-08-2018
 // cosmogat
 // autors.php
-function quinPerfil() {
-    $descr = fopen("../cnf/quinperfil.txt", "r");
-    $estem = fread($descr, 1);
-    if (!preg_match("/^[a-zA-Z0-9]$/", $estem))
-        $estem = "0";
-    fclose($descr);
-    return $estem;
-}
-function cadValid($cad) {
-    if (strpos($cad, "../") !== false)
-        return false;
-    $permesos = "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZÁÀÄÉÈËÍÌÏÓÒÖÚÙÜabcçdefghijklmnñopqrstuvwxyzáàäéèëíìïóòöúùü0123456789?._-,:/\\ ";
-    for ($i = 0; $i < strlen($cad); $i++)
-        if (strpos($permesos, substr($cad, $i, 1)) === false)
-            return false;
-    return true;
-}
+require_once("../inc/fun.inc.php");
 require_once("../cnf/conf_" . quinPerfil() . ".inc.php");
 header('Content-type: application/json');
 $host = $conf["bd"]["host"];

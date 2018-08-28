@@ -11,6 +11,7 @@ require_once("./inc/usu.obj.php");
 require_once("./inc/lnk.obj.php");
 require_once("./inc/con.obj.php");
 require_once("./inc/fun.inc.php");
+require_once("./inc/fnc.inc.php");
 require_once("./cnf/conf_" . quinPerfil() . ".inc.php");
 require_once("./cnf/menu.inc.php");
 

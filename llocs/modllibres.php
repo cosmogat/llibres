@@ -8,7 +8,7 @@ class LlocModllibres {
     public $menu = "llibres";
     public $permisos = 2;
     public $molles = array();
-    public $jsc_cap = array();
+    public $jsc_cap = array("autocomp_autors.js");
     public $jsc_peu = array();
     public $css = array();
     

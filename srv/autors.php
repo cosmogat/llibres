@@ -12,7 +12,8 @@ $basedades = $conf["bd"]["bdad"];
 $bd = @mysqli_connect($host, $usuari, $contrasenya, $basedades);
 $cons = isset($_REQUEST['term']) ? $_REQUEST['term'] : "" ;
 $items = array();
-if (cadValid($cons)) {
+$cons = trim($cons);
+if ((cadValid($cons)) and ($cons != "")) {
     $sql = "SELECT idescriptor AS c0, codi AS c1, autor AS c2 FROM Escriptor WHERE autor LIKE '%" . $cons . "%' OR codi LIKE '%" . $cons . "%' LIMIT 5";
     $res0 = @mysqli_query($bd, $sql);
     $ind = 0;
@@ -23,12 +24,8 @@ if (cadValid($cons)) {
         $codi = $res["c1"];
         $autor = $res["c2"];
         if ($ind != 1)
-            echo ",{";
-        else
-            echo "{";
-        echo "\"id\":"  . $id . ",\"codi\":\"" . $codi . "\",\"autor\":\"" . $autor . "\"";
-        echo "}";
-	
+            echo ",";
+        echo "\"" . $codi . " - " . $autor . "\"";	
     }
     echo "]";
     @mysqli_free_result($res0);

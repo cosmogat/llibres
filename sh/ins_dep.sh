@@ -4,11 +4,16 @@
 # ins_dep.sh
 
 JQUERY_VER="3.3.1"
+JQUEUI_VER="1.12.1"
 BOOTST_VER="3.3.7"
 
 cd ..
 cd js
 wget "https://code.jquery.com/jquery-$JQUERY_VER.min.js" -O jquery.min.js
+wget "https://code.jquery.com/ui/1.12.1/jquery-ui.js" -O jquery-ui.js
+cd ..
+cd css
+wget "http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" -O jquery-ui.css
 cd ..
 wget "https://github.com/twbs/bootstrap/releases/download/v$BOOTST_VER/bootstrap-$BOOTST_VER-dist.zip" -O bs.zip
 unzip bs.zip

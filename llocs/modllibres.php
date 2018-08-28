@@ -43,6 +43,7 @@ class LlocModllibres {
             $tpl->imprimir();
         }
         Peticio::impr();
+        echo $_SERVER["HTTP_USER_AGENT"];
     }
 
 }

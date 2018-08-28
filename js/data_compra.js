@@ -21,3 +21,5 @@ $(function() {
     $.datepicker.setDefaults($.datepicker.regional["cat"]);
     $("#data_compra").datepicker();
 } );
+// el dia de demà aquest arxiu no s'ha de gastar i s'utilitzarà <input type="date">
+// s'utilitza en modllibres.php (modllibres.html)

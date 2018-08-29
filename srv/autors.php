@@ -14,7 +14,7 @@ $cons = isset($_REQUEST['term']) ? $_REQUEST['term'] : "" ;
 $items = array();
 $cons = trim($cons);
 if ((cadValid($cons)) and ($cons != "")) {
-    $sql = "SELECT idescriptor AS c0, codi AS c1, autor AS c2 FROM Escriptor WHERE autor LIKE '%" . $cons . "%' OR codi LIKE '%" . $cons . "%' LIMIT 5";
+    $sql = "SELECT idescriptor AS c0, codi AS c1, autor AS c2 FROM Escriptor WHERE autor LIKE '%" . $cons . "%' OR codi LIKE '%" . $cons . "%' ORDER BY c1 LIMIT 5";
     $res0 = @mysqli_query($bd, $sql);
     $ind = 0;
     echo "[";

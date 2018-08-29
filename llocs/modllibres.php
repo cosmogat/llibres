@@ -5,7 +5,7 @@
 
 class LlocModllibres {
     public $nomweb = "llibres";
-    public $menu = "llibres";
+    public $menu = "categories";
     public $permisos = 2;
     public $molles = array();
     public $jsc_cap = array("autocomp_autors.js", "data_compra.js", "afegir_autor.js");
@@ -38,12 +38,11 @@ class LlocModllibres {
             $tpl->imprimir();
             
             $tpl->carregar("modllibres");
-            $tpl->mostrar("form_afegir_2");            
+            $tpl->mostrar("form_afegir_2");
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();
         }
         Peticio::impr();
-        echo $_SERVER["HTTP_USER_AGENT"];
     }
 
 }

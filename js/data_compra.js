@@ -1,3 +1,7 @@
+// 28-08-2018
+// alex
+// data_compra.js
+
 $(function() {
     $.datepicker.regional['cat'] = {
 	closeText: 'Tancar',

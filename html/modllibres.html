@@ -12,10 +12,15 @@
       <br />
       
       <label for="nom_aut">Nom de l'autora o autor o col·lecció</label>
-      <div class="input-group autocomplete">
-	<span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="autor" type="text" class="form-control" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut" aria-describedby="basic-addon2">
-      </div>
+      <div id="autors">
+	<div class="input-group autocomplete">
+	  <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	  <input name="autor" type="text" class="form-control" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut" aria-describedby="basic-addon2">
+	  <span class="input-group-btn">
+            <a class="btn btn-default" onclick="afAutors()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></span></a>
+</span>
+</div>
+</div>
       <br />
       
       <label for="cat">Categoria</label>
@@ -39,7 +44,7 @@
 	   <option>3</option>
 	   <option>4</option>
 	 </select>	 
-      </div>   
+       </div>   
        <br />
        
        <label for="subsubcat">Subsubcategoria</label>

@@ -74,6 +74,15 @@ class Consulta {
             ORDER BY codi";
         return $sql;
     }
+    
+    static public function categories_completes() {
+        $sql = "SELECT DISTINCT Classificacio.codi AS c00, Classificacio.nom AS c01 
+                FROM Subsubclassificacio 
+                       INNER JOIN Subclassificacio ON (Subsubclassificacio.subclassi = Subclassificacio.idsub) 
+                       INNER JOIN Classificacio ON (Subclassificacio.classi = Classificacio.idcla) 
+                ORDER BY Classificacio.codi, Subclassificacio.codi, Subsubclassificacio.codi";
+        return $sql;
+    }
 
     static public function class_perCodi($codi) {
         $sql = "SELECT Classificacio.codi AS c00, Classificacio.nom AS c01, Subclassificacio.codi AS c02, Subclassificacio.nom AS c03, 

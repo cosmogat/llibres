@@ -1,4 +1,4 @@
-<!-- INI form_afegir_1 -->
+<!-- INI form_afegir_0 -->
 <div class="container">
   <div class="col-md-3"></div>
   <div class="col-md-6">
@@ -26,11 +26,14 @@
       <label for="cat">Categoria</label>
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	 <select name="cat" class="form-control" id="sel1" aria-describedby="basic-addon3">
-	   <option>1</option>
-	   <option>2</option>
-	   <option>3</option>
-	   <option>4</option>
+	 <select name="cat" class="form-control" id="sel1" aria-describedby="basic-addon3" onclick="subcat_din(0)" onchange="subcat_din(0)">
+	   <!-- FIN form_afegir_0 -->
+	   <!-- INI cat_desp -->
+	   <!-- INI cat_el -->
+	   <option value="{CAT_COD}">{CAT_NOM}</option>
+	   <!-- FIN cat_el -->
+	   <!-- FIN cat_desp -->
+	   <!-- INI form_afegir_1 -->
 	 </select>	 
       </div>     
       <br />
@@ -38,11 +41,8 @@
       <label for="subcat">Subcategoria</label>
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon4"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	 <select name="subcat" class="form-control" id="sel2" aria-describedby="basic-addon4">
-	   <option>1</option>
-	   <option>2</option>
-	   <option>3</option>
-	   <option>4</option>
+	 <select name="subcat" class="form-control" id="sel2" aria-describedby="basic-addon4" onclick="subcat_din(0)" onchange="subcat_din(1)">
+	   <option value="-1">--- Selecciona una categoria ---</option>
 	 </select>	 
        </div>   
        <br />
@@ -51,10 +51,7 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon5"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="subsubcat" class="form-control" id="sel3" aria-describedby="basic-addon5">
-	   <option>1</option>
-	   <option>2</option>
-	   <option>3</option>
-	   <option>4</option>
+	   <option value="-1">--- Selecciona una subcategoria ---</option>
 	 </select>	 
        </div>  
        <br />

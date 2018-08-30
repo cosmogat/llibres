@@ -25,7 +25,9 @@ class LlocModllibres {
             $vec_categ = BaseDades::consVector(Consulta::categories_completes());
             for ($i = 0; $i < count($vec_categ); $i++)
                 $this->categ[] = array($vec_categ[$i][0], $vec_categ[$i][0] . " - " . $vec_categ[$i][1]);
-        
+            $llibre = new Llibre();
+            $llibre->agafPerId(18);
+            imprVec($llibre);
         }
     }
 

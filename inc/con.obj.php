@@ -67,6 +67,28 @@ class Consulta {
         return $sql;
     }
 
+    static public function llibre_perId($id) {
+        $sql = "SELECT Classificacio.nom AS c00, Subclassificacio.nom AS c01, Subsubclassificacio.nom AS c02, 
+                       Classificacio.codi AS c03, Subclassificacio.codi AS c04, Subsubclassificacio.codi AS c05, 
+                       Subsubclassificacio.idsubsub AS c06, Llibre.idllibre AS c07, Llibre.nom AS c08, Llibre.img_dir AS c09, 
+                       Escriptor.idescriptor AS c10, Escriptor.autor AS c11, Escriptor.codi AS c12, Escriptor.es_colleccio AS c13,
+                       Escriptor.img_dir AS c14, Escriptor.biografia AS c15, Llibre.ISBN AS c16, Idiomes.ididiomes AS c17, 
+                       Idiomes.nom AS c18, Llibre.editorial AS c19, Llibre.any_edicio AS c20, Llibre.any AS c21, 
+                       Llibre.data_compra AS c22, Llibre.lloc_compra AS c23,
+                       Llibre.descripcio AS c24, Llibre.data_modificacio AS c25, Usuaris.idusuari AS c26, Usuaris.codi AS c27,
+                       Usuaris.nom AS c28
+            FROM Classificacio
+                   INNER JOIN Subclassificacio ON (Subclassificacio.classi = Classificacio.idcla)
+                   INNER JOIN Subsubclassificacio ON (Subsubclassificacio.subclassi = Subclassificacio.idsub)
+                   INNER JOIN Llibre ON (Llibre.classi = Subsubclassificacio.idsubsub)
+                   INNER JOIN Escriptor ON (Escriptor.idescriptor = Llibre.autor_principal)
+                   INNER JOIN Idiomes ON (Idiomes.ididiomes = Llibre.idioma)
+                   INNER JOIN Usuaris ON (Usuaris.idusuari = Llibre.propietari)
+            WHERE Llibre.idllibre = " . intval($id) . "
+            LIMIT 1";
+        return $sql;
+    }
+    
     static public function categories() {
         $sql = "SELECT codi AS c00, nom AS c01, 
                     (SELECT COUNT(*) FROM Subclassificacio WHERE classi=Classificacio.idcla) AS c02
@@ -261,6 +283,15 @@ class Consulta {
 
     static public function autors2($codi) {
         return self::cercaInterna("", 0, 0, 0, 0, 0, $codi);
+    }
+
+    static public function autorsSec($idllib) {
+        $sql = "SELECT Autorssecundaris.Llibre_idllibre AS c00, Escriptor.idescriptor AS c01, Escriptor.autor AS c02, 
+                       Escriptor.codi AS c03, Escriptor.es_colleccio AS c04, Escriptor.img_dir AS c05, Escriptor.biografia AS c06 
+                FROM Autorssecundaris 
+                       INNER JOIN Escriptor ON (Autorssecundaris.Escriptor_idescriptor = Escriptor.idescriptor) 
+                WHERE Llibre_idllibre = " . intval($idllib);
+        return $sql;
     }
     
     static public function critiques($us, $ll) {

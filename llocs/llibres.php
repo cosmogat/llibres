@@ -12,8 +12,7 @@ class LlocLlibres {
     public $jsc_peu = array("lightbox.js");
     public $css = array();
     
-    public $llib = array();
-    public $cod_aut = "";
+    public $llib;
     public $crit = array();
     
     public function calculs() {
@@ -22,24 +21,23 @@ class LlocLlibres {
         $aut = Peticio::obte("autor");
         $num = Peticio::obte("num_l");
         if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num))) {
-            $this->cod_aut = $aut;
-            $v = BaseDades::consVector(Consulta::llibre_perEtiqueta($pro, $cla, $aut, $num))[0];
-            if (count($v) != 0)
-                array_push($this->llib, $pro . "-" . $cla . "-" . $aut . "-" . $num, $v[0], $v[1], $v[2], $v[3], $v[4], $v[5], $v[6], $v[7], $v[8], $v[9], $v[10], $v[11], $v[12], $v[13], $v[14], $v[15]);
-            for ($ind = 0; $ind < count($this->llib); $ind++)
-                $this->llib[$ind] = descodCad($this->llib[$ind]);
+            $this->llib = new Llibre();
+            $this->llib->agafPerEt($pro, $cla, $aut, $num);
         }
         
         if (count($this->llib) > 0) {
-            $this->nomweb = $this->nomweb . $this->llib[5] . " - " . $this->llib[7];
+            $this->nomweb = $this->nomweb . $this->llib->nom . " - " . $this->llib->autor->nom;
             $id_us = Usuari::idusuari();
-            if ($id_us != -1)
-                $this->crit = descodCad(BaseDades::consVector(Consulta::critiques($id_us, $this->llib[4]))[0]);
+            if ($id_us != -1) {
+                $v_cri = BaseDades::consVector(Consulta::critiques($id_us, $this->llib->id));
+                if (count($v_cri) > 0)
+                    $this->crit = descodCad($v_cri[0]);
+            }
             $this->molles[] = array(Link::url("index"), icona_bootstrap("home"));
             $this->molles[] = array(Link::url("categories"), "Categories");
-            for ($i = 1; $i <= 3; $i++)
-                $this->molles[] = array(Link::url("categories", substr($this->llib[0], 3, $i)), $this->llib[$i]);
-            $this->molles[] = array("", $this->llib[5]);
+            for ($i = 0; $i < 3; $i++)
+                $this->molles[] = array(Link::url("categories", substr($this->llib->categ->codi, 0, $i + 1)), $this->llib->categ->nom[$i]);
+            $this->molles[] = array("", $this->llib->nom);
         }
         else
             redireccionar(Link::url("categories"));
@@ -51,58 +49,58 @@ class LlocLlibres {
             
             $tpl->carregar("llibres");
             $tpl->mostrar("llibre_0");
-            $tpl->set("TITOL", $this->llib[5]);
-            $tpl->set("IMATG", Link::img("llibres/" . $this->llib[6]));
-            $tpl->set("LNK_A", Link::url("autors", $this->cod_aut));
-            $tpl->set("AUTOR", $this->llib[7]);
-            $tpl->set("ETIQU", $this->llib[0]);
+            $tpl->set("TITOL", $this->llib->nom);
+            $tpl->set("IMATG", Link::img("llibres/" . $this->llib->imatg));
+            $tpl->set("LNK_A", Link::url("autors", $this->llib->autor->codi));
+            $tpl->set("AUTOR", $this->llib->autor->nom);
+            $tpl->set("ETIQU", $this->llib->etiqueta());
             $tpl->imprimir();
-            if ($this->llib[10] != "") {
+            if ($this->llib->edito != "") {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_edit");
-                $tpl->set("EDITO", $this->llib[10]);
+                $tpl->set("EDITO", $this->llib->edito);
                 $tpl->imprimir();               
             }
-            if ($this->llib[12] != "") {
+            if ($this->llib->anyPu != "") {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_anyp");
-                $tpl->set("ANY_P", $this->llib[12]);
+                $tpl->set("ANY_P", $this->llib->anyPu);
                 $tpl->imprimir();               
             }
-            if ($this->llib[11] != "") {
+            if ($this->llib->anyEd != "") {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_anye");
-                $tpl->set("ANY_E", $this->llib[11]);
+                $tpl->set("ANY_E", $this->llib->anyEd);
                 $tpl->imprimir();               
             }
-            if ($this->llib[9] != "") {
+            if ($this->llib->idiom->nom != "") {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_idio");
-                $tpl->set("IDIOM", $this->llib[9]);
+                $tpl->set("IDIOM", $this->llib->idiom->nom);
                 $tpl->imprimir();               
             }
-            if (($this->llib[13] != "") and ($this->llib[14] != "")) {
+            if (($this->llib->llocC != "") and ($this->llib->dataC != "")) {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_comp");
-                $tpl->set("LLOCC", $this->llib[14]);
-                $tpl->set("DATAC", data_catala($this->llib[13]));
+                $tpl->set("LLOCC", $this->llib->llocC);
+                $tpl->set("DATAC", data_catala($this->llib->dataC));
                 $tpl->imprimir();               
             }
-            if ($this->llib[8] != "") {
+            if ($this->llib->nisbn != "") {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_isbn");
-                $tpl->set("ISBNN", $this->llib[8]);
+                $tpl->set("ISBNN", $this->llib->nisbn);
                 $tpl->imprimir();               
             }            
-            if ($this->llib[15] != "") {
+            if ($this->llib->descr != "") {
                 $tpl->carregar("llibres");
                 $tpl->mostrar("llibre_desc");
-                $tpl->set("DESCR", $this->llib[15]);
+                $tpl->set("DESCR", $this->llib->descr);
                 $tpl->imprimir();               
             }             
             $tpl->carregar("llibres");
             $tpl->mostrar("llibre_1");
-            $tpl->set("MODIF", $this->llib[16]);
+            $tpl->set("MODIF", $this->llib->dataM);
             $tpl->imprimir();
 
             if ((count($this->crit) != 0)  and ($this->crit[1] != "")) {

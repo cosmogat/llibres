@@ -45,11 +45,15 @@ class Consulta {
     }
     
     static public function llibre_perEtiqueta($et0, $et1, $et2, $et3) {
-        $sql = "SELECT Classificacio.nom AS c00, Subclassificacio.nom AS c01, Subsubclassificacio.nom AS c02,
-                   Llibre.idllibre AS c03,
-                   Llibre.nom AS c04, Llibre.img_dir AS c05, Escriptor.autor AS c06, Llibre.ISBN AS c07, Idiomes.nom AS c08,  
-                   Llibre.editorial AS c09, Llibre.any_edicio AS c10, Llibre.any AS c11, Llibre.data_compra AS c12, Llibre.lloc_compra AS c13, 
-                   Llibre.descripcio AS c14, Llibre.data_modificacio AS c15
+        $sql = "SELECT Classificacio.nom AS c00, Subclassificacio.nom AS c01, Subsubclassificacio.nom AS c02, 
+                       Classificacio.codi AS c03, Subclassificacio.codi AS c04, Subsubclassificacio.codi AS c05, 
+                       Subsubclassificacio.idsubsub AS c06, Llibre.idllibre AS c07, Llibre.nom AS c08, Llibre.img_dir AS c09, 
+                       Escriptor.idescriptor AS c10, Escriptor.autor AS c11, Escriptor.codi AS c12, Escriptor.es_colleccio AS c13,
+                       Escriptor.img_dir AS c14, Escriptor.biografia AS c15, Llibre.ISBN AS c16, Idiomes.ididiomes AS c17, 
+                       Idiomes.nom AS c18, Llibre.editorial AS c19, Llibre.any_edicio AS c20, Llibre.any AS c21, 
+                       Llibre.data_compra AS c22, Llibre.lloc_compra AS c23,
+                       Llibre.descripcio AS c24, Llibre.data_modificacio AS c25, Usuaris.idusuari AS c26, Usuaris.codi AS c27,
+                       Usuaris.nom AS c28, Llibre.num_llibre AS c29, Llibre.pagines AS c30
             FROM Classificacio
                    INNER JOIN Subclassificacio ON (Subclassificacio.classi = Classificacio.idcla)
                    INNER JOIN Subsubclassificacio ON (Subsubclassificacio.subclassi = Subclassificacio.idsub)
@@ -76,7 +80,7 @@ class Consulta {
                        Idiomes.nom AS c18, Llibre.editorial AS c19, Llibre.any_edicio AS c20, Llibre.any AS c21, 
                        Llibre.data_compra AS c22, Llibre.lloc_compra AS c23,
                        Llibre.descripcio AS c24, Llibre.data_modificacio AS c25, Usuaris.idusuari AS c26, Usuaris.codi AS c27,
-                       Usuaris.nom AS c28
+                       Usuaris.nom AS c28, Llibre.num_llibre AS c29, Llibre.pagines AS c30
             FROM Classificacio
                    INNER JOIN Subclassificacio ON (Subclassificacio.classi = Classificacio.idcla)
                    INNER JOIN Subsubclassificacio ON (Subsubclassificacio.subclassi = Subclassificacio.idsub)
@@ -265,6 +269,11 @@ class Consulta {
 
     static public function autor($codi) {
         $sql ="SELECT idescriptor AS c00, autor AS c01, codi AS c02, img_dir AS c03, biografia AS c04 , es_colleccio AS c05 FROM Escriptor WHERE codi = '" . $codi . "'";
+        return $sql;
+    }
+
+    static public function autor_perId($id) {
+        $sql ="SELECT idescriptor AS c00, autor AS c01, codi AS c02, img_dir AS c03, biografia AS c04 , es_colleccio AS c05 FROM Escriptor WHERE idescriptor = '" . $id . "'";
         return $sql;
     }
 

@@ -28,6 +28,7 @@ class Autora {
     public $biog = "";
 
     public function __construct() {}
+    
     public function __destruct() {
         $this->id = null;
         $this->nom = null;
@@ -35,8 +36,37 @@ class Autora {
         $this->cole = null;
         $this->imgR = null;
         $this->biog = null;        
-    }    
-    public function agafPerId($num) {}
+    }
+
+    private function poblar($v_sql) {
+        $this->id = $v_sql[0];
+        $this->nom = $v_sql[1];
+        $this->codi = $v_sql[2];
+        $this->cole = $v_sql[5];
+        $this->imgR = $v_sql[3];
+        $this->biog = $v_sql[4];                
+    }
+    
+    public function agafPerId($num) {
+        if (is_numeric($num)) {
+            $v = BaseDades::consVector(Consulta::autor_perId(intval($num)));
+            if (count($v) > 0) {
+                $this->poblar($v[0]);
+                return 1;
+            }
+        }
+        return 0;
+    }        
+    
+    public function agafPerCod($codi) {
+        $v = BaseDades::consVector(Consulta::autor($codi));
+        if (count($v) > 0) {
+            $this->poblar($v[0]);
+            return 1;
+        }
+        return 0;
+    }
+    
     public function desar() {}
     public function esborrar() {}
 }
@@ -50,7 +80,7 @@ class Idioma {
         $this->id = null;
         $this->nom = null;      
     }
-    public function agafPerId($num) {}
+    public function agafPerId($num) {}    
     public function desar() {}
     public function esborrar() {}
 }
@@ -73,6 +103,7 @@ class Propietari {
 
 class Llibre {
     public $id = -1;
+    public $num = 0;
     public $nom = "";
     public $categ;
     public $autor;
@@ -99,6 +130,7 @@ class Llibre {
 
     public function __destruct() {
         $this->id = null;
+        $this->num = null;
         $this->nom = null;
         $this->edito = null;
         $this->nisbn = null;
@@ -119,57 +151,79 @@ class Llibre {
         }
     }
 
+    private function poblar($v_sql) {
+        $this->categ->id = intval($v_sql[6]);
+        $this->categ->nom = array(descodCad($v_sql[0]), descodCad($v_sql[1]), descodCad($v_sql[2]));
+        $this->categ->codi = $v_sql[3] . $v_sql[4] . $v_sql[5];
+        $this->autor->id = intval($v_sql[10]);
+        $this->autor->nom = descodCad($v_sql[11]);
+        $this->autor->codi = $v_sql[12];
+        $this->autor->cole = intval($v_sql[13]);
+        $this->autor->imgR = $v_sql[14];
+        $this->autor->biog = descodCad($v_sql[15]);
+        $this->idiom->id = $v_sql[17];
+        $this->idiom->nom = descodCad($v_sql[18]);
+        $this->propi->id = intval($v_sql[26]);
+        $this->propi->nom = $v_sql[28];
+        $this->propi->codi = $v_sql[27];
+        $this->id = intval($v_sql[7]);
+        $this->num = $v_sql[29];
+        $this->nom = descodCad($v_sql[8]);
+        $this->imatg = $v_sql[9];
+        $this->nisbn = $v_sql[16];
+        $this->edito = descodCad($v_sql[19]);
+        $this->anyEd = intval($v_sql[20]);
+        $this->anyPu = intval($v_sql[21]);
+        $this->dataC = $v_sql[22];
+        $this->llocC = descodCad($v_sql[23]);
+        $this->descr = descodCad($v_sql[24]);
+        $this->dataM = $v_sql[25];
+        $this->numpg = $v_sql[30];
+    }
+
+    private function poblarAutores($v_sql) {
+        for ($i = 0; $i < count($v_sql); $i++) {
+            $secund = new Autora();
+            $secund->id = intval($v_sql[$i][1]);
+            $secund->nom = descodCad($v_sql[$i][2]);
+            $secund->codi = $v_sql[$i][3];
+            $secund->cole = intval($v_sql[$i][4]);
+            $secund->imgR = $v_sql[$i][5];
+            $secund->biog = descodCad($v_sql[$i][6]);
+            $this->autSe[] = $secund;
+        }       
+    }
+    
     public function agafPerId($num) {
         if (is_numeric($num)) {
             $v = BaseDades::consVector(Consulta::llibre_perId(intval($num)));
             if (count($v) > 0) {
-                $llib = $v[0];
-                $this->categ->id = intval($llib[6]);
-                $this->categ->nom = array($llib[0], $llib[1], $llib[2]);
-                $this->categ->codi = $llib[3] . $llib[4] . $llib[5];
-                $this->autor->id = intval($llib[10]);
-                $this->autor->nom = $llib[11];
-                $this->autor->codi = $llib[12];
-                $this->autor->cole = intval($llib[13]);
-                $this->autor->imgR = $llib[14];
-                $this->autor->biog = $llib[15];
-                $this->idiom->id = $llib[17];
-                $this->idiom->nom = $llib[18];
-                $this->propi->id = intval($llib[26]);
-                $this->propi->nom = $llib[27];
-                $this->propi->codi = $llib[28];
-                $this->id = intval($llib[7]);
-                $this->nom = $llib[8];
-                $this->imatg = $llib[9];
-                $this->nisbn = $llib[16];
-                $this->edito = $llib[19];
-                $this->anyEd = intval($llib[20]);
-                $this->anyPu = intval($llib[21]);
-                $this->dataC = $llib[22];
-                $this->llocC = $llib[23];
-                $this->descr = $llib[24];
-                $this->dataM = $llib[25];
-                $a = BaseDades::consVector(Consulta::autorsSec(intval($num)));
-                for ($i = 0; $i < count($a); $i++) {
-                    $secund = new Autora();
-                    $secund->id = intval($a[$i][1]);
-                    $secund->nom = $a[$i][2];
-                    $secund->codi = $a[$i][3];
-                    $secund->cole = intval($a[$i][4]);
-                    $secund->imgR = $a[$i][5];
-                    $secund->biog = $a[$i][6];
-                    $this->autSe[] = $secund;
-                }
-                    
+                $this->poblar($v[0]);
+                $a = BaseDades::consVector(Consulta::autorsSec($this->id));
+                if (count($a) > 0)
+                    $this->poblarAutores($a);                    
                 return 1;
             }
         }
         return 0;
     }
 
-    public function agafPerCodi($pro, $cla, $aut, $num) {
-        $v = BaseDades::consVector(Consulta::llibre_perEtiqueta($pro, $cla, $aut, $num))[0];
-        
+    public function agafPerEt($pro, $cla, $aut, $num) {
+        $v = BaseDades::consVector(Consulta::llibre_perEtiqueta($pro, $cla, $aut, $num));
+        if (count($v) > 0) {
+            $this->poblar($v[0]);
+            $a = BaseDades::consVector(Consulta::autorsSec($this->id));
+            if (count($a) > 0)
+                $this->poblarAutores($a);
+            return 1;
+        }
+        return 0;     
+    }
+
+    public function etiqueta() {
+        if ($this->id != -1)
+            return $this->propi->codi . "-" . $this->categ->codi . "-" . $this->autor->codi . "-" . sprintf("%03d", $this->num);
+        return "";            
     }
     
     public function desar() {}

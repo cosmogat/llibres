@@ -25,9 +25,39 @@ class LlocModllibres {
             $vec_categ = BaseDades::consVector(Consulta::categories_completes());
             for ($i = 0; $i < count($vec_categ); $i++)
                 $this->categ[] = array($vec_categ[$i][0], $vec_categ[$i][0] . " - " . $vec_categ[$i][1]);
-            $llibre = new Llibre();
-            $llibre->agafPerId(18);
-            imprVec($llibre);
+            if (Peticio::exis("afegir")) {
+                $llib = new Llibre();
+                $llib->nom = trim(Peticio::obte("nom"));
+                if ($llib->nom == "")
+                    $this->alert = 1;
+                else {
+                    $llib->edito = Peticio::obte("edit");
+                    $llib->nisbn = Peticio::obte("isbn");
+                    $llib->anyPu = Peticio::obte("any");
+                    $llib->anyEd = Peticio::obte("anye");
+                    $llib->dataC = Peticio::obte("data");
+                    $llib->llocC = Peticio::obte("lloc_c");
+                    $llib->numpg = Peticio::obte("pagi");
+                    $llib->descr = Peticio::obte("desc");
+                    $llib->dataM = date("Y-m-d H:i:s");
+                }
+                if ($this->alert == 0) {
+                    $vec_autors = Peticio::obte("autor");
+                    if (count($vec_autors) == 0)
+                        $this->alert = 2;
+                    else {
+                        for ($i = 0; $i < count($vec_autors); $i++)
+                            $vec_autors[$i] = explode(" ", $vec_autors[$i])[0];
+                        $llib->autor->agafPerCod($vec_autors[0]);
+                        for ($i = 1; $i < count($vec_autors); $i++) {
+                            $secund = new Autora();
+                            $secund->agafPerCod($vec_autors[$i]);
+                            $llib->autSe[] = $secund;
+                        }
+                    }
+                }   
+                $this->llib = $llib;
+            }
         }
     }
 
@@ -57,6 +87,7 @@ class LlocModllibres {
             $tpl->imprimir();
         }
         Peticio::impr();
+        imprVec($this->llib);
     }
 
 }

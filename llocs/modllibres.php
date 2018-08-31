@@ -35,7 +35,11 @@ class LlocModllibres {
                     $llib->nisbn = Peticio::obte("isbn");
                     $llib->anyPu = Peticio::obte("any");
                     $llib->anyEd = Peticio::obte("anye");
-                    $llib->dataC = Peticio::obte("data");
+                    $vec_data = explode("/", Peticio::obte("data"));
+                    if (count($vec_data) == 3)
+                        $llib->dataC = $vec_data[2] . "-" . $vec_data[1] . "-" . $vec_data[0];
+                    else
+                        $llib->dataC = "";
                     $llib->llocC = Peticio::obte("lloc_c");
                     $llib->numpg = Peticio::obte("pagi");
                     $llib->descr = Peticio::obte("desc");

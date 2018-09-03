@@ -13,6 +13,7 @@ class LlocModllibres {
     public $css = array();
     
     public $alert = 0;
+    public $llib;
     public $idiomes = array();
     public $categ = array();
     

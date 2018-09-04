@@ -380,4 +380,22 @@ class Consulta {
         $sql = "SELECT * FROM Idiomes";
         return $sql;
     }
+
+    static public function ultim_num($idclass, $idautor) {
+        $sql = "SELECT num_llibre 
+                FROM Llibre 
+                WHERE autor_principal = " . $idautor . " 
+                       AND classi = " . $idclass . " 
+                ORDER BY num_llibre DESC 
+                LIMIT 1";
+        return $sql;
+    }
+
+    static public function insertLlibre($a, $b, $c, $d, $e, $f, $g, $h, $i, $j, $k, $l, $m, $n, $o) {
+        $sql = "INSERT INTO Llibre 
+                (classi, autor_principal, propietari, num_llibre, nom, data_modificacio, idioma, editorial, ISBN, any_edicio, any, data_compra, lloc_compra, descripcio, pagines) VALUES 
+                (" . $a . ", " . $b . ", " . $c . ", " . $d . ", '" . $e . "', '" . $f . "', " . $g . ", '" . $h . "', '" . $i . "', " . $j . ", " . $k . ", '" . $l . "', '" . $m . "', '" . $n . "', " . $o . ")";
+
+        return $sql;
+    }
 }

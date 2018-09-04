@@ -226,6 +226,25 @@ class Llibre {
         return "";            
     }
     
-    public function desar() {}
+    public function desar() {
+        if (($this->id == -1) and ($this->num == 0)) {
+            $v_ult = BaseDades::consVector(Consulta::ultim_num($this->categ->id, $this->autor->id));
+            $numeret = 1;
+            if (count($v_ult) > 0)
+                $numeret = intval($v_ult[0][0]) + 1;
+            $this->num = $numeret;
+            if (BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $this->nom, $this->dataM, $this->idiom->id, $this->edito, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $this->llocC, $this->descr, $this->numpg))) {
+                // insertar autors secundaris
+                // pujar foto
+                // actualitzar llibre amb foto
+            }
+
+        }
+        else {
+            // update
+        }
+        return 0;
+    }
+    
     public function esborrar() {}
 }

@@ -19,4 +19,5 @@ css/jquery-ui.css
 css/*.map
 sql/*.bak
 sql/insert.sql
+sql/tot.sql
 images/*

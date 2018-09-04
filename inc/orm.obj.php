@@ -11,10 +11,34 @@ class ClassCompleta {
     public function __construct() {}
     public function __destruct() {
         $this->id = null;
-        $this->nom = null;
-        $this->codi = null;      
-    }    
-    public function agafPerId($num) {}
+        $this->codi = null;
+        $this->nom = null;      
+    }
+
+    private function poblar($v_sql) {
+        $this->id = intval($v_sql[0]);
+        $this->codi = $v_sql[1];
+        $this->nom = array(descodCad($v_sql[2]), descodCad($v_sql[3]), descodCad($v_sql[4]));
+    }
+    
+    public function agafPerId($num) {
+        $v = BaseDades::consVector(Consulta::subsubcl_id($num));
+        if (count($v) > 0) {
+            $this->poblar($v[0]);
+            return 1;
+        }
+        return 0;       
+    }
+
+    public function agafPerCod($codi) {
+        $v = BaseDades::consVector(Consulta::subsubcl($codi));
+        if (count($v) > 0) {
+            $this->poblar($v[0]);
+            return 1;
+        }
+        return 0;
+    }
+    
     public function desar() {}
     public function esborrar() {}
 }
@@ -80,7 +104,19 @@ class Idioma {
         $this->id = null;
         $this->nom = null;      
     }
-    public function agafPerId($num) {}    
+    
+    public function agafPerId($num) {
+        if (is_numeric($num)) {
+            $v = BaseDades::consVector(Consulta::idiomes_id(intval($num)));
+            if (count($v) > 0) {
+                $this->id = intval($v[0][0]);
+                $this->nom = descodCad($v[0][1]);
+                return 1;
+            }
+        }
+        return 0;
+    }             
+
     public function desar() {}
     public function esborrar() {}
 }
@@ -96,7 +132,20 @@ class Propietari {
         $this->nom = null;
         $this->codi = null;        
     }
-    public function agafPerId($num) {}
+    
+    public function agafPerId($num) {
+        if (is_numeric($num)) {
+            $v = BaseDades::consVector(Consulta::usuaris_id(intval($num)));
+            if (count($v) > 0) {
+                $this->id = intval($v[0][0]);
+                $this->nom = $v[0][1];
+                $this->codi = $v[0][2];
+                return 1;
+            }
+        }
+        return 0;
+    }
+    
     public function desar() {}
     public function esborrar() {}
 }
@@ -233,7 +282,12 @@ class Llibre {
             if (count($v_ult) > 0)
                 $numeret = intval($v_ult[0][0]) + 1;
             $this->num = $numeret;
-            if (BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $this->nom, $this->dataM, $this->idiom->id, $this->edito, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $this->llocC, $this->descr, $this->numpg))) {
+            $nom_cd = codCad($this->nom);
+            $edi_cd = codCad($this->edito);
+            $llo_cd = codCad($this->llocC);
+            $des_cd = codCad($this->descr);
+            //echo Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg);
+            if (BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg))) {
                 // insertar autors secundaris
                 // pujar foto
                 // actualitzar llibre amb foto

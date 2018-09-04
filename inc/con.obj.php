@@ -267,6 +267,11 @@ class Consulta {
         return $sql;
     }
 
+    static public function usuaris_id($id) {
+        $sql = "SELECT idusuari, nom, codi FROM Usuaris WHERE idusuari = " . intval($id);
+        return $sql;
+    }
+    
     static public function autor($codi) {
         $sql ="SELECT idescriptor AS c00, autor AS c01, codi AS c02, img_dir AS c03, biografia AS c04 , es_colleccio AS c05 FROM Escriptor WHERE codi = '" . $codi . "'";
         return $sql;
@@ -330,6 +335,24 @@ class Consulta {
             
     }
     
+    static public function subsubcl($codi) {
+        $sql = "SELECT idsubsub AS c00, CONCAT(Classificacio.codi, Subclassificacio.codi, Subsubclassificacio.codi) AS c01, Classificacio.nom AS c02, Subclassificacio.nom AS c03, Subsubclassificacio.nom AS c04
+                FROM Classificacio 
+                       INNER JOIN Subclassificacio ON (Subclassificacio.classi = Classificacio.idcla) 
+                       INNER JOIN Subsubclassificacio ON (Subsubclassificacio.subclassi = Subclassificacio.idsub) 
+                WHERE Classificacio.codi = " . intval($codi[0]) . " AND Subclassificacio.codi = " . intval($codi[1]) . " AND Subsubclassificacio.codi = " . intval($codi[2]);
+        return $sql;
+    }
+
+    static public function subsubcl_id($num) {
+        $sql = "SELECT idsubsub AS c00, CONCAT(Classificacio.codi, Subclassificacio.codi, Subsubclassificacio.codi) AS c01, Classificacio.nom AS c02, Subclassificacio.nom AS c03, Subsubclassificacio.nom AS c04
+                FROM Classificacio 
+                       INNER JOIN Subclassificacio ON (Subclassificacio.classi = Classificacio.idcla) 
+                       INNER JOIN Subsubclassificacio ON (Subsubclassificacio.subclassi = Subclassificacio.idsub) 
+                WHERE Subsubclassificacio.idsubsub = " . intval($num);
+        return $sql;
+    }
+    
     static public function insert_subcategoria($cla, $cat, $num) {
         $sql = "INSERT INTO Subclassificacio (classi, nom, codi) VALUES (" . $cla . ", '" . $cat . "' , " . $num . ")";
         return $sql;
@@ -340,6 +363,11 @@ class Consulta {
         return $sql;
     }
 
+    static public function idiomes_id($num) {
+        $sql = "SELECT ididiomes AS c00, nom AS c01 FROM Idiomes WHERE ididiomes = " . intval($num);
+        return $sql;
+    }
+    
     static public function exisAutor_perNom($nom) {
         $sql = "SELECT COUNT(*) FROM Escriptor WHERE autor = '" . $nom . "'";
         return $sql;

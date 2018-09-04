@@ -34,17 +34,20 @@ class LlocModllibres {
                 else {
                     $llib->edito = Peticio::obte("edit");
                     $llib->nisbn = Peticio::obte("isbn");
-                    $llib->anyPu = Peticio::obte("any");
-                    $llib->anyEd = Peticio::obte("anye");
                     $vec_data = explode("/", Peticio::obte("data"));
                     if (count($vec_data) == 3)
                         $llib->dataC = $vec_data[2] . "-" . $vec_data[1] . "-" . $vec_data[0];
                     else
                         $llib->dataC = "";
                     $llib->llocC = Peticio::obte("lloc_c");
-                    $llib->numpg = Peticio::obte("pagi");
                     $llib->descr = Peticio::obte("desc");
                     $llib->dataM = date("Y-m-d H:i:s");
+                    if (trim(Peticio::obte("any")) != "")
+                        $llib->anyPu = intval(trim(Peticio::obte("any")));
+                    if (trim(Peticio::obte("anye")) != "")
+                        $llib->anyEd = intval(trim(Peticio::obte("anye")));
+                    if (trim(Peticio::obte("pagi")) != "")
+                        $llib->numpg = intval(trim(Peticio::obte("pagi")));                    
                 }
                 if ($this->alert == 0) {
                     $vec_autors = Peticio::obte("autor");
@@ -60,8 +63,23 @@ class LlocModllibres {
                             $llib->autSe[] = $secund;
                         }
                     }
-                }   
-                $this->llib = $llib;
+                }
+                if ($this->alert == 0)
+                    if (!$llib->categ->agafPerCod(Peticio::obte("subsubcat")))
+                        $this->alert = 3;
+
+                if ($this->alert == 0) 
+                    if (!$llib->idiom->agafPerId(intval(Peticio::obte("idio"))))
+                        $this->alert = 4;
+
+                if ($this->alert == 0) 
+                    if (!$llib->propi->agafPerId(intval(Usuari::idusuari())))
+                        $this->alert = 5;
+                
+                if ($this->alert == 0) {
+                    $llib->desar();
+                    $this->llib = $llib;
+                }
             }
         }
     }

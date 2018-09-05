@@ -77,7 +77,11 @@ class LlocModllibres {
                         $this->alert = 5;
                 
                 if ($this->alert == 0) {
-                    $llib->desar();
+                    $vec_puj = $_FILES["foto"];
+                    if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0))
+                        $llib->desar($vec_puj);
+                    else
+                        $llib->desar();
                     $this->llib = $llib;
                 }
             }

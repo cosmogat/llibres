@@ -96,7 +96,7 @@ function pujarFoto($vec_info, $id, $tipus) {
     if ($tipus == 0)
         $sql = Consulta::canvAutorFoto($id, $nom_desti);
     else
-        $sql = ""; // açò hi haura que adaptarlo per a llibres       
+        $sql = Consulta::canvLlibreFoto($id, $nom_desti);
     if (move_uploaded_file($vec_info["tmp_name"], $ruta_desti)) {
         if (BaseDades::consulta($sql))
             return 1;

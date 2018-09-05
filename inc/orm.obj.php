@@ -275,7 +275,7 @@ class Llibre {
         return "";            
     }
     
-    public function desar() {
+    public function desar($vec_puj = array()) {
         if (($this->id == -1) and ($this->num == 0)) {
             $v_ult = BaseDades::consVector(Consulta::ultim_num($this->categ->id, $this->autor->id));
             $numeret = 1;
@@ -286,6 +286,7 @@ class Llibre {
             $edi_cd = codCad($this->edito);
             $llo_cd = codCad($this->llocC);
             $des_cd = codCad($this->descr);
+            //insertar llibre
             $c_sql = BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg));
             if (!$c_sql)
                 return -1;
@@ -294,14 +295,18 @@ class Llibre {
             if (count($v_ll) == 0)
                 return -2;
             $this->id = intval($v_ll[0][7]);
-            $aut_id = array();
-            for ($i = 0; $i < count($this->autSe); $i++)
-                $aut_id[] = $this->autSe[$i]->id;
-            $c_sql = BaseDades::consulta(Consulta::insertAutorsSec($this->id, $aut_id));
-            if (!$c_sql)
-                return -2;
+            if (count($this->autSe) > 0) {
+                $aut_id = array();
+                for ($i = 0; $i < count($this->autSe); $i++)
+                    $aut_id[] = $this->autSe[$i]->id;
+                $c_sql = BaseDades::consulta(Consulta::insertAutorsSec($this->id, $aut_id));
+                if (!$c_sql)
+                    return -2;
+            }
             // pujar foto
-            // actualitzar llibre amb foto
+            if (count($vec_puj) > 0) {
+                $err_foto = pujarFoto($vec_puj, $this->id, 1);
+            }
 
         }
         else {

@@ -404,6 +404,11 @@ class Consulta {
         return $sql;
     }
 
+    static public function canvLlibreFoto($id, $ruta_foto) {
+        $sql = "UPDATE Llibre SET img_dir = '" . $ruta_foto . "' WHERE idllibre = " . intval($id);
+        return $sql;
+    }
+    
     static public function idiomes() {
         $sql = "SELECT * FROM Idiomes";
         return $sql;

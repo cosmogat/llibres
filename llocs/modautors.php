@@ -98,9 +98,6 @@ class LlocModautors {
                         if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0)) {
                             $err_foto = pujarFoto($vec_puj, $id_escr, 0);
                             $this->alert = abs($err_foto - 8);
-                            if ($err_foto == 1) {
-                                //eliminarFoto($this->autor[3], 0);
-                            }
                         }
                     }
                     if ($this->alert == 0)

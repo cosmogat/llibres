@@ -434,7 +434,7 @@ class Consulta {
     
     static public function insertAutorsSec($idllib, $vec_aut) {
         $sql = "INSERT INTO Autorssecundaris (Llibre_idllibre, Escriptor_idescriptor) VALUES ";
-        $tam = count($vec_aut) - 1;
+        $tam = count($vec_aut);
         for ($i = 0; $i < $tam - 1; $i++)
             $sql = $sql . "(" . intval($idllib) . ", " . intval($vec_aut[$i]) . "), ";
         $sql = $sql . "(" . intval($idllib) . ", " . intval($vec_aut[$tam - 1]) . ")";

@@ -286,12 +286,22 @@ class Llibre {
             $edi_cd = codCad($this->edito);
             $llo_cd = codCad($this->llocC);
             $des_cd = codCad($this->descr);
-            //echo Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg);
-            if (BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg))) {
-                // insertar autors secundaris
-                // pujar foto
-                // actualitzar llibre amb foto
-            }
+            $c_sql = BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg));
+            if (!$c_sql)
+                return -1;
+            // insertar autors secundaris
+            $v_ll = BaseDades::consVector(Consulta::llibre_perEtiqueta($this->propi->codi, $this->categ->codi, $this->autor->codi, $this->num));
+            if (count($v_ll) == 0)
+                return -2;
+            $this->id = intval($v_ll[0][7]);
+            $aut_id = array();
+            for ($i = 0; $i < count($this->autSe); $i++)
+                $aut_id[] = $this->autSe[$i]->id;
+            $c_sql = BaseDades::consulta(Consulta::insertAutorsSec($this->id, $aut_id));
+            if (!$c_sql)
+                return -2;
+            // pujar foto
+            // actualitzar llibre amb foto
 
         }
         else {

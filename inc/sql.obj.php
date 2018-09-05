@@ -56,12 +56,12 @@ class BaseDades {
         return $val;
     }
     static public function consulta($sql) {
-        $return = false;
+        $return = False;
         $txt = $sql;
         if (self::$encode)
             $txt = utf8_decode($sql);
         if ($cons = @mysqli_query(self::$con, $txt))
-            $return = true;
+            $return = True;
         @mysqli_free_result($cons);
         return $return;
     }

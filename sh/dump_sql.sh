@@ -1,7 +1,7 @@
 #!/bin/bash
 # 05-09-2018
-# alex
-# dump.sh
+# cosmogat
+# dump_sql.sh
 
 BDUS="root"
 BDBD="bdllibres"

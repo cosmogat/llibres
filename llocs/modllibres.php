@@ -8,7 +8,8 @@ class LlocModllibres {
     public $menu = "categories";
     public $permisos = 2;
     public $molles = array();
-    public $jsc_cap = array("autocomp_autors.js", "data_compra.js", "afegir_autor.js", "subcat.js");
+    //public $jsc_cap = array("autocomp_autors.js", "data_compra.js", "afegir_autor.js", "subcat.js");
+    public $jsc_cap = array("autocomp_autors.js", "afegir_autor.js", "subcat.js");
     public $jsc_peu = array();
     public $css = array();
     
@@ -34,11 +35,7 @@ class LlocModllibres {
                 else {
                     $llib->edito = Peticio::obte("edit");
                     $llib->nisbn = Peticio::obte("isbn");
-                    $vec_data = explode("/", Peticio::obte("data"));
-                    if (count($vec_data) == 3)
-                        $llib->dataC = $vec_data[2] . "-" . $vec_data[1] . "-" . $vec_data[0];
-                    else
-                        $llib->dataC = "";
+                    $llib->dataC = Peticio::obte("data");
                     $llib->llocC = Peticio::obte("lloc_c");
                     $llib->descr = Peticio::obte("desc");
                     $llib->dataM = date("Y-m-d H:i:s");

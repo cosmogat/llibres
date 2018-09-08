@@ -20,12 +20,11 @@ class LlocLlibres {
         $cla = Peticio::obte("class");
         $aut = Peticio::obte("autor");
         $num = Peticio::obte("num_l");
-        if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num))) {
-            $this->llib = new Llibre();
+        $this->llib = new Llibre();
+        if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num)))
             $this->llib->agafPerEt($pro, $cla, $aut, $num);
-        }
         
-        if (count($this->llib) > 0) {
+        if ($this->llib->id != -1) {
             $this->nomweb = $this->nomweb . $this->llib->nom . " - " . $this->llib->autor->nom;
             $id_us = Usuari::idusuari();
             if ($id_us != -1) {

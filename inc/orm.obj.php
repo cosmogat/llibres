@@ -277,7 +277,7 @@ class Llibre {
     
     public function desar($vec_puj = array()) {
         if (($this->id == -1) and ($this->num == 0)) {
-            $v_ult = BaseDades::consVector(Consulta::ultim_num($this->categ->id, $this->autor->id));
+            $v_ult = BaseDades::consVector(Consulta::ultim_num($this->categ->id, $this->autor->id, $this->propi->id));
             $numeret = 1;
             if (count($v_ult) > 0)
                 $numeret = intval($v_ult[0][0]) + 1;

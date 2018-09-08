@@ -414,11 +414,12 @@ class Consulta {
         return $sql;
     }
 
-    static public function ultim_num($idclass, $idautor) {
+    static public function ultim_num($idclass, $idautor, $idpropi) {
         $sql = "SELECT num_llibre 
                 FROM Llibre 
                 WHERE autor_principal = " . $idautor . " 
                        AND classi = " . $idclass . " 
+                       AND propietari = " . $idpropi . " 
                 ORDER BY num_llibre DESC 
                 LIMIT 1";
         return $sql;

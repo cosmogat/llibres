@@ -88,24 +88,24 @@ class LlocModllibres {
     public function imprimir() {
         $tpl = new Plantilla("./html");
         if ($this->mod == 0) {
-            $tpl->carregar("modllibres");
+            $tpl->carregar("afllibres");
             $tpl->mostrar("form_afegir_0");
             $tpl->set("ACTION", Link::url("afegir-llibres"));
             $tpl->imprimir();
 
-            $tpl->carregar("modllibres");
+            $tpl->carregar("afllibres");
             $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM"), $this->categ);
             $tpl->mostrar("cat_desp");
             $tpl->imprimir();
 
-            $tpl->carregarMostrar("modllibres", "form_afegir_1");
+            $tpl->carregarMostrar("afllibres", "form_afegir_1");
 
-            $tpl->carregar("modllibres");
+            $tpl->carregar("afllibres");
             $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM"), $this->idiomes);
             $tpl->mostrar("idi_desp");
             $tpl->imprimir();
             
-            $tpl->carregar("modllibres");
+            $tpl->carregar("afllibres");
             $tpl->mostrar("form_afegir_2");
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();

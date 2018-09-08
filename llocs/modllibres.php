@@ -55,9 +55,20 @@ class LlocModllibres {
                             $vec_autors[$i] = explode(" ", $vec_autors[$i])[0];
                         $llib->autor->agafPerCod($vec_autors[0]);
                         for ($i = 1; $i < count($vec_autors); $i++) {
-                            $secund = new Autora();
-                            $secund->agafPerCod($vec_autors[$i]);
-                            $llib->autSe[] = $secund;
+                            $cod_rep = 0;
+                            if ($vec_autors[0] == $vec_autors[$i])
+                                $cod_rep = 1;
+                            else {
+                                for ($j = 0; $j < count($llib->autSe); $j++) {
+                                    $cod_rep = $cod_rep + ($llib->autSe[$j]->codi == $vec_autors[$i]);
+                                }
+                                $j = 0;
+                            }
+                            if ($cod_rep == 0) {
+                                $secund = new Autora();
+                                $secund->agafPerCod($vec_autors[$i]);
+                                $llib->autSe[] = $secund;
+                            }
                         }
                     }
                 }

@@ -75,10 +75,15 @@ class LlocModllibres {
                 
                 if ($this->alert == 0) {
                     $vec_puj = $_FILES["foto"];
+                    $err = 0;
                     if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0))
-                        $llib->desar($vec_puj);
+                        $err = $llib->desar($vec_puj);
                     else
-                        $llib->desar();
+                        $err = $llib->desar();
+                    if ($err)
+                        $this->alert = 6;
+                    else
+                        $this->alert = 7;
                     $this->llib = $llib;
                 }
             }
@@ -109,6 +114,9 @@ class LlocModllibres {
             $tpl->mostrar("form_afegir_2");
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();
+            
+            if ($this->alert != 0)
+                $tpl->carregarMostrar("afllibres", "ale_" . $this->alert);
         }
         Peticio::impr();
         imprVec($this->llib);

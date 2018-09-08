@@ -287,15 +287,15 @@ class Llibre {
             $llo_cd = codCad($this->llocC);
             $des_cd = codCad($this->descr);
             if ((!cadValid($nom_cd)) or (!cadValid($edi_cd)) or (!cadValid($llo_cd)) or (!cadValid($des_cd)))
-                return -3;
+                return 0;
             //insertar llibre
             $c_sql = BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg));
             if (!$c_sql)
-                return -1;
+                return 0;
             // insertar autors secundaris
             $v_ll = BaseDades::consVector(Consulta::llibre_perEtiqueta($this->propi->codi, $this->categ->codi, $this->autor->codi, $this->num));
             if (count($v_ll) == 0)
-                return -2;
+                return 0;
             $this->id = intval($v_ll[0][7]);
             if (count($this->autSe) > 0) {
                 $aut_id = array();
@@ -303,18 +303,19 @@ class Llibre {
                     $aut_id[] = $this->autSe[$i]->id;
                 $c_sql = BaseDades::consulta(Consulta::insertAutorsSec($this->id, $aut_id));
                 if (!$c_sql)
-                    return -2;
+                    return 0;
             }
             // pujar foto
             if (count($vec_puj) > 0) {
-                $err_foto = pujarFoto($vec_puj, $this->id, 1);
+                if (!pujarFoto($vec_puj, $this->id, 1))
+                    return 0;
             }
 
         }
         else {
             // update
         }
-        return 0;
+        return 1;
     }
     
     public function esborrar() {}

@@ -286,6 +286,8 @@ class Llibre {
             $edi_cd = codCad($this->edito);
             $llo_cd = codCad($this->llocC);
             $des_cd = codCad($this->descr);
+            if ((!cadValid($nom_cd)) or (!cadValid($edi_cd)) or (!cadValid($llo_cd)) or (!cadValid($des_cd)))
+                return -3;
             //insertar llibre
             $c_sql = BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg));
             if (!$c_sql)

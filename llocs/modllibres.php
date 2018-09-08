@@ -99,6 +99,9 @@ class LlocModllibres {
                 }
             }
         }
+        else if ($this->mod == 1) {
+            
+        }
     }
 
     public function imprimir() {
@@ -129,6 +132,11 @@ class LlocModllibres {
             if ($this->alert != 0)
                 $tpl->carregarMostrar("afllibres", "ale_" . $this->alert);
         }
+
+        if ($this->mod == 1) {
+
+        }
+        
         Peticio::impr();
         imprVec($this->llib);
     }

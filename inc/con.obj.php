@@ -437,7 +437,16 @@ class Consulta {
 
         return $sql;
     }
-
+    
+    static public function actualLlibre($a, $b, $c, $d, $e, $f, $g, $h, $i, $j, $k, $l, $m, $n, $o, $idl) {
+        $sql = "UPDATE Llibre 
+                SET    classi = " . $a . ", autor_principal = " . $b . ", propietari = " . $c . ", num_llibre = " . $d . ", nom = '" . $e . "', data_modificacio = '" . $f . "', 
+                       idioma = " . $g . ", editorial = '" . $h . "', ISBN = '" . $i . "', any_edicio = " . $j . ", any = " . $k . ", data_compra = '" . $l . "', lloc_compra = '" . $m . "', 
+                       descripcio = '" . $n . "', pagines = " . $o . "
+                WHERE idllibre = " . intval($idl);
+        return $sql;
+    }
+    
     static public function max_id_llibre() {
         $sql = "SELECT MAX(idllibre) AS c00 FROM Llibre";
         return $sql;
@@ -451,4 +460,12 @@ class Consulta {
         $sql = $sql . "(" . intval($idllib) . ", " . intval($vec_aut[$tam - 1]) . ")";
         return $sql;
     }
+    
+    static public function eliminAutorsSec($idllib) {
+        $sql = "DELETE FROM Autorssecundaris WHERE Llibre_idllibre = " . intval($idllib);
+        return $sql;
+    }
+
+
+    
 }

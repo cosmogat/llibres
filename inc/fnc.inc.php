@@ -76,7 +76,7 @@ function generarEtiqueta($nom) {
     return "e00";
 }
 
-function pujarFoto($vec_info, $id, $tipus) {
+function pujarFoto($vec_info, $id, $tipus, &$nom_desti) {
     $ext = "";
     if ($vec_info["type"] == "image/jpeg")
         $ext = "jpg";
@@ -86,10 +86,8 @@ function pujarFoto($vec_info, $id, $tipus) {
         $ext = "svg";
     else
         return 0;
-    if (($vec_info["size"] > 10485760) or ($vec_info["size"] < 10))
-        return -1;
-    if (!is_uploaded_file($vec_info['tmp_name']))
-        return -2;
+    if (($vec_info["size"] > 10485760) or ($vec_info["size"] < 10) or (!is_uploaded_file($vec_info['tmp_name'])))
+        return 0;
     $nom_desti = $id . "." . $ext;
     $ruta_desti = Registre::lleg("direc") . "/img/" . ($tipus == 0 ? "autors" : "llibres") . "/" . $nom_desti;
     $sql = "";
@@ -100,12 +98,8 @@ function pujarFoto($vec_info, $id, $tipus) {
     if (move_uploaded_file($vec_info["tmp_name"], $ruta_desti)) {
         if (BaseDades::consulta($sql))
             return 1;
-        else
-            return -4;
     }
-    else
-        return -3;
-    return -5;
+    return 0;
 }
 
 function eliminarFoto($nom_fitxer, $tipus) {

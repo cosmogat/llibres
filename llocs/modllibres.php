@@ -23,8 +23,10 @@ class LlocModllibres {
     
     public function calculs() {
         $this->mod = intval(Peticio::obte("mode"));
-        if (!preg_match("/^[0-2]$/", $this->mod))
+        if (!preg_match("/^[0-1]$/", $this->mod))
             redireccionar(Link::url("index"));
+        $this->llib = new Llibre();
+        
         if ($this->mod == 0) {
             $vec_idiom = BaseDades::consVector(Consulta::idiomes());
             for ($i = 0; $i < count($vec_idiom); $i++)
@@ -32,84 +34,13 @@ class LlocModllibres {
             $vec_categ = BaseDades::consVector(Consulta::categories_completes());
             for ($i = 0; $i < count($vec_categ); $i++)
                 $this->categ[] = array($vec_categ[$i][0], $vec_categ[$i][0] . " - " . $vec_categ[$i][1], "");
-            if (Peticio::exis("afegir")) {
-                $llib = new Llibre();
-                $llib->nom = trim(Peticio::obte("nom"));
-                if ($llib->nom == "")
-                    $this->alert = 1;
-                else {
-                    $llib->edito = Peticio::obte("edit");
-                    $llib->nisbn = Peticio::obte("isbn");
-                    $llib->dataC = Peticio::obte("data");
-                    $llib->llocC = Peticio::obte("lloc_c");
-                    $llib->descr = Peticio::obte("desc");
-                    $llib->dataM = date("Y-m-d H:i:s");
-                    if (trim(Peticio::obte("any")) != "")
-                        $llib->anyPu = intval(trim(Peticio::obte("any")));
-                    if (trim(Peticio::obte("anye")) != "")
-                        $llib->anyEd = intval(trim(Peticio::obte("anye")));
-                    if (trim(Peticio::obte("pagi")) != "")
-                        $llib->numpg = intval(trim(Peticio::obte("pagi")));                    
-                }
-                if ($this->alert == 0) {
-                    $vec_autors = Peticio::obte("autor");
-                    if (count($vec_autors) == 0)
-                        $this->alert = 2;
-                    else {
-                        for ($i = 0; $i < count($vec_autors); $i++)
-                            $vec_autors[$i] = explode(" ", $vec_autors[$i])[0];
-                        $llib->autor->agafPerCod($vec_autors[0]);
-                        for ($i = 1; $i < count($vec_autors); $i++) {
-                            $cod_rep = 0;
-                            if ($vec_autors[0] == $vec_autors[$i])
-                                $cod_rep = 1;
-                            else {
-                                for ($j = 0; $j < count($llib->autSe); $j++) {
-                                    $cod_rep = $cod_rep + ($llib->autSe[$j]->codi == $vec_autors[$i]);
-                                }
-                                $j = 0;
-                            }
-                            if ($cod_rep == 0) {
-                                $secund = new Autora();
-                                $secund->agafPerCod($vec_autors[$i]);
-                                $llib->autSe[] = $secund;
-                            }
-                        }
-                    }
-                }
-                if ($this->alert == 0)
-                    if (!$llib->categ->agafPerCod(Peticio::obte("subsubcat")))
-                        $this->alert = 3;
-
-                if ($this->alert == 0) 
-                    if (!$llib->idiom->agafPerId(intval(Peticio::obte("idio"))))
-                        $this->alert = 4;
-
-                if ($this->alert == 0) 
-                    if (!$llib->propi->agafPerId(intval(Usuari::idusuari())))
-                        $this->alert = 5;
-                
-                if ($this->alert == 0) {
-                    $vec_puj = $_FILES["foto"];
-                    $err = 0;
-                    if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0))
-                        $err = $llib->desar($vec_puj);
-                    else
-                        $err = $llib->desar();
-                    if ($err)
-                        $this->alert = 6;
-                    else
-                        $this->alert = 7;
-                    $this->llib = $llib;
-                }
-            }
         }
+        
         else if ($this->mod == 1) {
             $pro = Peticio::obte("propi");
             $cla = Peticio::obte("class");
             $aut = Peticio::obte("autpr");
             $num = Peticio::obte("num_l");
-            $this->llib = new Llibre();
             if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num)))
                 $this->llib->agafPerEt($pro, $cla, $aut, $num);
             if ($this->llib->id != -1) {
@@ -135,8 +66,82 @@ class LlocModllibres {
                         $this->subsc[] = array($cod_ssc, $cod_ssc . " - " . $vec_categ[$i][5], $this->llib->categ->codi[2] == $vec_categ[$i][4] ? "selected" : "");
                     }
             }
-            /* else */
-            /*     redireccionar(Link::url("categories")); */
+            else
+                redireccionar(Link::url("categories"));
+        }
+        if (Peticio::exis("afegir")) {
+            $this->llib->nom = trim(Peticio::obte("nom"));
+            if ($this->llib->nom == "")
+                $this->alert = 1;
+            else {
+                $this->llib->edito = Peticio::obte("edit");
+                $this->llib->nisbn = Peticio::obte("isbn");
+                $this->llib->dataC = Peticio::obte("data");
+                $this->llib->llocC = Peticio::obte("lloc_c");
+                $this->llib->descr = Peticio::obte("desc");
+                $this->llib->dataM = date("Y-m-d H:i:s");
+                if (trim(Peticio::obte("any")) != "")
+                    $this->llib->anyPu = intval(trim(Peticio::obte("any")));
+                if (trim(Peticio::obte("anye")) != "")
+                    $this->llib->anyEd = intval(trim(Peticio::obte("anye")));
+                if (trim(Peticio::obte("pagi")) != "")
+                    $this->llib->numpg = intval(trim(Peticio::obte("pagi")));
+                if ($this->mod == 1) {
+                    $this->llib->num = Peticio::obte("numll");
+                    $this->llib->propi->agafPerId(intval(Peticio::obte("prop")));
+                }
+            }
+            if ($this->alert == 0) {
+                $vec_autors = Peticio::obte("autor");
+                if (count($vec_autors) == 0)
+                    $this->alert = 2;
+                else {
+                    for ($i = 0; $i < count($vec_autors); $i++)
+                        $vec_autors[$i] = explode(" ", $vec_autors[$i])[0];
+                    $this->llib->autor->agafPerCod($vec_autors[0]);
+                    $this->llib->autSe = array();
+                    for ($i = 1; $i < count($vec_autors); $i++) {
+                        $cod_rep = 0;
+                        if ($vec_autors[0] == $vec_autors[$i])
+                            $cod_rep = 1;
+                        else {
+                            for ($j = 0; $j < count($this->llib->autSe); $j++) {
+                                $cod_rep = $cod_rep + ($this->llib->autSe[$j]->codi == $vec_autors[$i]);
+                            }
+                            $j = 0;
+                        }
+                        if (($cod_rep == 0) and (codiValid($vec_autors[$i]))) {
+                            $secund = new Autora();
+                            $secund->agafPerCod($vec_autors[$i]);
+                            $this->llib->autSe[] = $secund;
+                        }
+                    }
+                }
+            }
+            if ($this->alert == 0)
+                if (!$this->llib->categ->agafPerCod(Peticio::obte("subsubcat")))
+                    $this->alert = 3;
+
+            if ($this->alert == 0) 
+                if (!$this->llib->idiom->agafPerId(intval(Peticio::obte("idio"))))
+                    $this->alert = 4;
+
+            if (($this->mod == 0) and ($this->alert == 0))
+                if (!$this->llib->propi->agafPerId(intval(Usuari::idusuari())))
+                    $this->alert = 5;
+                
+            if ($this->alert == 0) {
+                $vec_puj = $_FILES["foto"];
+                $err = 0;
+                if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0))
+                    $err = $this->llib->desar($vec_puj);
+                else
+                    $err = $this->llib->desar();
+                if ($err)
+                    $this->alert = 6;
+                else
+                    $this->alert = 7;
+            }            
         }
     }
 
@@ -196,9 +201,6 @@ class LlocModllibres {
             $tpl->set("TEXTA", "Afegir");
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();
-            
-            if ($this->alert != 0)
-                $tpl->carregarMostrar("afllibres", "ale_" . $this->alert);
         }
 
         if ($this->mod == 1) {
@@ -276,8 +278,11 @@ class LlocModllibres {
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();
         }
-        
+        if ($this->alert != 0)
+            $tpl->carregarMostrar("modllibres", "ale_" . $this->alert);
+                    
         Peticio::impr();
+        imprVec($_FILES);
         imprVec($this->llib);
     }
 

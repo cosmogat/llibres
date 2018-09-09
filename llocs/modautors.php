@@ -49,8 +49,10 @@ class LlocModautors {
                 $vec_puj = $_FILES["foto"];
                 if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0)) {
                     $id_escr = BaseDades::consVector(Consulta::idautor_perCodi($codi_autor))[0][0];
-                    $err_foto = pujarFoto($vec_puj, $id_escr, 0);
-                    $this->alert = abs($err_foto - 8);
+                    if (pujarFoto($vec_puj, $id_escr, 0))
+                        $this->alert = 7;
+                    else 
+                        $this->alert = 8;
                 }
                 else
                     $this->alert = 6;
@@ -96,9 +98,13 @@ class LlocModautors {
                     if ($this->alert == 0) {
                         $vec_puj = $_FILES["foto"];
                         if ((trim($vec_puj["name"]) != "") and ($vec_puj["error"] == 0)) {
-                            $err_foto = pujarFoto($vec_puj, $id_escr, 0);
-                            $this->alert = abs($err_foto - 8);
+                            if (pujarFoto($vec_puj, $id_escr, 0))
+                                $this->alert = 7;
+                            else
+                                $this->alert = 8;
                         }
+                        else
+                            $this->alert = 6;
                     }
                     if ($this->alert == 0)
                         redireccionar(Link::url("editar-autors", $codi_nou));

@@ -276,45 +276,60 @@ class Llibre {
     }
     
     public function desar($vec_puj = array()) {
-        if (($this->id == -1) and ($this->num == 0)) {
+        $nou = 0;
+        $sql_cad = "";
+        $nom_cd = codCad($this->nom);
+        $edi_cd = codCad($this->edito);
+        $llo_cd = codCad($this->llocC);
+        $des_cd = codCad($this->descr);
+        if ((!cadValid($nom_cd)) or (!cadValid($edi_cd)) or (!cadValid($llo_cd)) or (!cadValid($des_cd)))
+            return 0;
+        if (($this->id == -1) and ($this->num == 0))
+            $nou = 1;
+
+        // insertar llibre o actualitzar existent
+        if ($nou == 1) {
             $v_ult = BaseDades::consVector(Consulta::ultim_num($this->categ->id, $this->autor->id, $this->propi->id));
-            $numeret = 1;
+            $this->num = 1;
             if (count($v_ult) > 0)
-                $numeret = intval($v_ult[0][0]) + 1;
-            $this->num = $numeret;
-            $nom_cd = codCad($this->nom);
-            $edi_cd = codCad($this->edito);
-            $llo_cd = codCad($this->llocC);
-            $des_cd = codCad($this->descr);
-            if ((!cadValid($nom_cd)) or (!cadValid($edi_cd)) or (!cadValid($llo_cd)) or (!cadValid($des_cd)))
-                return 0;
-            //insertar llibre
-            $c_sql = BaseDades::consulta(Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg));
-            if (!$c_sql)
-                return 0;
-            // insertar autors secundaris
+                $this->num = intval($v_ult[0][0]) + 1;
+            $sql_cad = Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg);
+        }
+        else
+            $sql_cad = Consulta::actualLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg, $this->id);
+        if (!BaseDades::consulta($sql_cad))
+            return 0;
+
+        // autores secundaries
+        if ($nou == 1) {
             $v_ll = BaseDades::consVector(Consulta::llibre_perEtiqueta($this->propi->codi, $this->categ->codi, $this->autor->codi, $this->num));
             if (count($v_ll) == 0)
                 return 0;
             $this->id = intval($v_ll[0][7]);
-            if (count($this->autSe) > 0) {
-                $aut_id = array();
-                for ($i = 0; $i < count($this->autSe); $i++)
-                    $aut_id[] = $this->autSe[$i]->id;
-                $c_sql = BaseDades::consulta(Consulta::insertAutorsSec($this->id, $aut_id));
-                if (!$c_sql)
-                    return 0;
-            }
-            // pujar foto
-            if (count($vec_puj) > 0) {
-                if (!pujarFoto($vec_puj, $this->id, 1))
-                    return 0;
-                else { /*actualitzar $this->imatg */ }
-            }
-
         }
-        else {
-            // update
+        else
+            BaseDades::consulta(Consulta::eliminAutorsSec($this->id));
+        if (count($this->autSe) > 0) {
+            $aut_id = array();
+            for ($i = 0; $i < count($this->autSe); $i++)
+                $aut_id[] = $this->autSe[$i]->id;
+            $c_sql = BaseDades::consulta(Consulta::insertAutorsSec($this->id, $aut_id));
+            if (!$c_sql)
+                return 0;
+        }
+        
+        if (count($vec_puj) > 0) {
+            $desti_img = "";
+            $err = pujarFoto($vec_puj, $this->id, 1, $desti_img);
+            if (!$err)
+                return 0;
+            else {
+                $img_ant = $this->imatg;
+                $this->imatg = $desti_img;
+                if ($img_ant != "")
+                    unlink(Registre::lleg("direc") . "/img/llibres/" . $img_ant);
+                    
+            }
         }
         return 1;
     }

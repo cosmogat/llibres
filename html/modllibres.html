@@ -1,4 +1,4 @@
-<!-- INI form_afegir_0 -->
+<!-- INI form_editar_0 -->
 <div class="container">
   <div class="col-md-3"></div>
   <div class="col-md-6">
@@ -7,33 +7,51 @@
       <label for="nom_llib">Nom complet del llibre</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon0"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="nom" type="text" class="form-control" placeholder="Nom del llibre" id="nom_llib" aria-describedby="basic-addon0">
+	<input name="nom" type="text" class="form-control" placeholder="Nom del llibre" id="nom_llib" aria-describedby="basic-addon0" value="{NOMLL}">
       </div>
       <br />
       
       <label for="nom_aut">Nom de l'autora o autor o col·lecció</label>
-      <div id="autors" data-nombredautors="1">
+      <div id="autors" data-nombredautors="{NUM_AUT}">
 	<div class="input-group autocomplete">
 	  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	  <input name="autor[]" type="text" class="form-control autoc" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut1" aria-describedby="basic-addon1">
+	  <input name="autor[]" type="text" class="form-control autoc" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut1" aria-describedby="basic-addon1" value="{AUTOR}">
 	  <span class="input-group-btn">
             <a class="btn btn-default" onclick="afAutors()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
 	  </span>
 	</div>
+	<!-- FIN form_editar_0 -->
+	<!-- INI form_autse -->
+	<br />
+	<div class="input-group autocomplete">
+	  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	  <input name="autor[]" type="text" class="form-control autoc" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut{AUT_NUM}" aria-describedby="basic-addon1" value="{AUT_SE}">
+	</div>	
+	<!-- FIN form_autse -->
+	<!-- INI form_editar_1 -->
       </div>
       <br />
-      
+      <!-- FIN form_editar_1 -->
+      <!-- INI form_numll -->
+      <label for="numl">Número de l'etiqueta</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon99"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="numll" type="number" class="form-control"  placeholder="Número de l'etiqueta" id="numl" aria-describedby="basic-addon99" value="{NUMERET}">
+      </div>
+      <br />      
+      <!-- FIN form_numll -->
+      <!-- INI form_editar_2 -->
       <label for="cat">Categoria</label>
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="cat" class="form-control" id="sel1" aria-describedby="basic-addon3" onclick="subcat_din(0)" onchange="subcat_din(0)">
-	   <!-- FIN form_afegir_0 -->
+	   <!-- FIN form_editar_2 -->
 	   <!-- INI cat_desp -->
 	   <!-- INI cat_el -->
-	   <option value="{CAT_COD}">{CAT_NOM}</option>
+	   <option value="{CAT_COD}" {CAT_CHK}>{CAT_NOM}</option>
 	   <!-- FIN cat_el -->
 	   <!-- FIN cat_desp -->
-	   <!-- INI form_afegir_1 -->
+	   <!-- INI form_editar_3 -->
 	 </select>	 
       </div>     
       <br />
@@ -42,7 +60,13 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon4"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="subcat" class="form-control" id="sel2" aria-describedby="basic-addon4" onclick="subcat_din(0)" onchange="subcat_din(1)">
-	   <option value="-1">--- Selecciona una categoria ---</option>
+	   <!-- FIN form_editar_3 -->
+	   <!-- INI scat_desp -->
+	   <!-- INI scat_el -->
+	   <option value="{SCAT_COD}" {SCAT_CHK}>{SCAT_NOM}</option>
+	   <!-- FIN scat_el -->
+	   <!-- FIN scat_desp -->	   
+	   <!-- INI form_editar_4 -->
 	 </select>	 
        </div>   
        <br />
@@ -51,7 +75,13 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon5"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="subsubcat" class="form-control" id="sel3" aria-describedby="basic-addon5">
-	   <option value="-1">--- Selecciona una subcategoria ---</option>
+	   <!-- FIN form_editar_4 -->
+	   <!-- INI sscat_desp -->
+	   <!-- INI sscat_el -->
+	   <option value="{SSCAT_COD}" {SSCAT_CHK}>{SSCAT_NOM}</option>
+	   <!-- FIN sscat_el -->
+	   <!-- FIN sscat_desp -->
+	   <!-- INI form_editar_5 -->
 	 </select>	 
        </div>  
        <br />
@@ -60,66 +90,78 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon6"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="idio" class="form-control" id="sel4" aria-describedby="basic-addon6">
-	   <!-- FIN form_afegir_1 -->
+	   <!-- FIN form_editar_5 -->
 	   <!-- INI idi_desp -->
 	   <!-- INI idi_el -->
-	   <option value="{IDI_COD}">{IDI_NOM}</option>
+	   <option value="{IDI_COD}" {IDI_CHK}>{IDI_NOM}</option>
 	   <!-- FIN idi_el -->
 	   <!-- FIN idi_desp -->
-	   <!-- INI form_afegir_2 -->
+	   <!-- INI form_editar_6 -->
 	 </select>	 
       </div>     
       <br />
 
-      <label for="nom_edit">Editorial</label>
+      <label for="pro">Propietari</label>
+       <div class="input-group">
+	 <span class="input-group-addon" id="basic-addon98"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	 <select name="prop" class="form-control" id="sel5" aria-describedby="basic-addon98">
+	   <!-- FIN form_editar_6 -->
+	   <!-- INI pro_desp -->
+	   <!-- INI pro_el -->
+	   <option value="{PRO_COD}" {PRO_CHK}>{PRO_NOM}</option>
+	   <!-- FIN pro_el -->
+	   <!-- FIN pro_desp -->
+	   <!-- INI form_editar_7 -->
+	 </select>	 
+       </div>     
+       <br /> 
+       
+       <label for="nom_edit">Editorial</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon7"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="edit" type="text" class="form-control"  placeholder="Nom de l'editorial" id="nom_edit" aria-describedby="basic-addon7">
+	<input name="edit" type="text" class="form-control"  placeholder="Nom de l'editorial" id="nom_edit" aria-describedby="basic-addon7" value="{EDITO}">
       </div>
       <br />
 
       <label for="isb">ISBN</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon8"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="isbn" type="number" class="form-control"  placeholder="ISBN" id="isb" aria-describedby="basic-addon8">
+	<input name="isbn" type="number" class="form-control"  placeholder="ISBN" id="isb" aria-describedby="basic-addon8" value="{NISBN}">
       </div>
       <br />
 
       <label for="any_pu">Any de publicació</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon9"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="any" type="number" class="form-control" placeholder="1449" id="any_pu" aria-describedby="basic-addon9">
+	<input name="any" type="number" class="form-control" placeholder="1449" id="any_pu" aria-describedby="basic-addon9" value="{ANYPU}">
       </div>
       <br />
 
       <label for="any_ed">Any d'aquesta edició</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon10"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="anye" type="number" class="form-control" placeholder="1449" id="any_ed" aria-describedby="basic-addon10">
+	<input name="anye" type="number" class="form-control" placeholder="1449" id="any_ed" aria-describedby="basic-addon10" value="{ANYED}">
       </div>
       <br />
 
       <label for="data_c">Data de compra</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon11"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<!--
-	<input name="data" type="text" class="form-control" placeholder="dia/mes/any" id="data_compra" aria-describedby="basic-addon11">
-	-->
-	<input name="data" type="date" class="form-control" placeholder="dia/mes/any" id="data_compra" aria-describedby="basic-addon11">
+	<input name="data" type="date" class="form-control" id="data_compra" aria-describedby="basic-addon11" value="{DATAC}">
       </div>
       <br />
 
       <label for="lloc_c">Lloc de compra</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon12"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="lloc_c" type="text" class="form-control" placeholder="Nom complet del lloc on es va realitzar l'adquisició d'aquest llibre" id="lloc_c" aria-describedby="basic-addon12">
+	<input name="lloc_c" type="text" class="form-control" placeholder="Nom complet del lloc on es va realitzar l'adquisició d'aquest llibre" id="lloc_c" aria-describedby="basic-addon12" value="{LLOCC}">
       </div>
       <br />
 
       <label for="num_pag">Número de pàgines</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon14"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<input name="pagi" type="number" class="form-control" placeholder="Número de pàgines del llibre" id="num_pag" aria-describedby="basic-addon14">
+	<input name="pagi" type="number" class="form-control" placeholder="Número de pàgines del llibre" id="num_pag" aria-describedby="basic-addon14" value="{NPAGI}">
       </div>
       <br /> 
       
@@ -132,13 +174,13 @@
       <br /><small>Etiquetes html permeses: &lt;br /&gt;,  &lt;ul&gt;, &lt;li&gt;, &lt;ol&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;del&gt; i els seus tancaments. </small>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	<textarea name="desc" class="form-control" rows="5" id="comment" placeholder="Breu descripció d'aquest llibre."></textarea>
+	<textarea name="desc" class="form-control" rows="5" id="comment" placeholder="Breu descripció d'aquest llibre.">{DESCR}</textarea>
       </div>
       <br />
       
       <div class="btn-group pull-right" role="group" aria-label="...">
 	<div class="btn-group" role="group">
-	  <button class="btn btn-success" name="afegir" type="submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Afegir</button>
+	  <button class="btn btn-{TIPUS}" name="afegir" type="submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;{TEXTA}</button>
 	</div>
       </div>
       <div class="btn-group pull-left" role="group" aria-label="...">
@@ -153,7 +195,7 @@
     <hr />
   </div>
 </div>
-<!-- FIN form_afegir_2 -->
+<!-- FIN form_editar_7 -->
 <!-- INI ale_1 -->
 <div class="container">
   <div class="alert alert-danger alert-dismissible" role="alert">

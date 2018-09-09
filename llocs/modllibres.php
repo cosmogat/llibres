@@ -141,7 +141,9 @@ class LlocModllibres {
                     $this->alert = 6;
                 else
                     $this->alert = 7;
-            }            
+            }
+            if ($this->alert == 6)
+                redireccionar(Link::url("editar-llibres", $this->llib->etiqueta()));
         }
     }
 

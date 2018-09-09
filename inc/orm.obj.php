@@ -309,6 +309,7 @@ class Llibre {
             if (count($vec_puj) > 0) {
                 if (!pujarFoto($vec_puj, $this->id, 1))
                     return 0;
+                else { /*actualitzar $this->imatg */ }
             }
 
         }

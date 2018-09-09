@@ -100,7 +100,22 @@ class LlocModllibres {
             }
         }
         else if ($this->mod == 1) {
-            
+            $this->idiomes = BaseDades::consVector(Consulta::idiomes());
+            $vec_categ = BaseDades::consVector(Consulta::categories_completes());
+            for ($i = 0; $i < count($vec_categ); $i++)
+                $this->categ[] = array($vec_categ[$i][0], $vec_categ[$i][0] . " - " . $vec_categ[$i][1]);
+            $pro = Peticio::obte("propi");
+            $cla = Peticio::obte("class");
+            $aut = Peticio::obte("autor");
+            $num = Peticio::obte("num_l");
+            $this->llib = new Llibre();
+            if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num)))
+                $this->llib->agafPerEt($pro, $cla, $aut, $num);
+            if ($this->llib->id != -1) {
+
+            }
+            else
+                redireccionar(Link::url("categories"));
         }
     }
 
@@ -134,7 +149,36 @@ class LlocModllibres {
         }
 
         if ($this->mod == 1) {
+            $tpl->carregar("edllibres");
+            $tpl->mostrar("form_editar_0");
+            $tpl->set("ACTION", Link::url("afegir-llibres"));
+            $tpl->set("NOMLL", $this->llib->nom); 
+            $tpl->imprimir();
 
+            $tpl->carregar("edllibres");
+            $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM"), $this->categ);
+            $tpl->mostrar("cat_desp");
+            $tpl->imprimir();
+
+            $tpl->carregarMostrar("edllibres", "form_editar_1");
+
+            $tpl->carregar("edllibres");
+            $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM"), $this->idiomes);
+            $tpl->mostrar("idi_desp");
+            $tpl->imprimir();
+            
+            $tpl->carregar("edllibres");
+            $tpl->mostrar("form_editar_2");
+            $tpl->set("EDITO", $this->llib->edito); 
+            $tpl->set("NISBN", $this->llib->nisbn); 
+            $tpl->set("ANYPU", $this->llib->anyPu); 
+            $tpl->set("ANYED", $this->llib->anyEd); 
+            $tpl->set("DATAC", $this->llib->dataC); 
+            $tpl->set("LLOCC", $this->llib->llocC); 
+            $tpl->set("NPAGI", $this->llib->numpg); 
+            $tpl->set("DESCR", $this->llib->descr); 
+            $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
+            $tpl->imprimir();
         }
         
         Peticio::impr();

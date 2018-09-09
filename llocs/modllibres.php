@@ -107,7 +107,7 @@ class LlocModllibres {
         else if ($this->mod == 1) {
             $pro = Peticio::obte("propi");
             $cla = Peticio::obte("class");
-            $aut = Peticio::obte("autor");
+            $aut = Peticio::obte("autpr");
             $num = Peticio::obte("num_l");
             $this->llib = new Llibre();
             if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num)))
@@ -135,8 +135,8 @@ class LlocModllibres {
                         $this->subsc[] = array($cod_ssc, $cod_ssc . " - " . $vec_categ[$i][5], $this->llib->categ->codi[2] == $vec_categ[$i][4] ? "selected" : "");
                     }
             }
-            else
-                redireccionar(Link::url("categories"));
+            /* else */
+            /*     redireccionar(Link::url("categories")); */
         }
     }
 
@@ -204,7 +204,7 @@ class LlocModllibres {
         if ($this->mod == 1) {
             $tpl->carregar("modllibres");
             $tpl->mostrar("form_editar_0");
-            $tpl->set("ACTION", Link::url("editar-llibres"));
+            $tpl->set("ACTION", Link::url("editar-llibres", $this->llib->etiqueta()));
             $tpl->set("NOMLL", $this->llib->nom);
             $tpl->set("NUM_AUT", 1 + count($this->llib->autSe));
             $tpl->set("AUTOR", $this->llib->autor->codi . " - " . $this->llib->autor->nom);

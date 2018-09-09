@@ -12,5 +12,5 @@ RewriteRule ^([a-z]{2})\-categories\-([0-9]{1,3}).html$ llibres/index.php?lloc=m
 RewriteRule ^afegir-autors.html$ llibres/index.php?lloc=modautors&mode=0 [L,QSA]
 RewriteRule ^editar-autors\-([A-Z0-9]{3,5}).html$ llibres/index.php?lloc=modautors&mode=1&codi=$1 [L,QSA]
 RewriteRule ^afegir-llibres.html$ llibres/index.php?lloc=modllibres&mode=0 [L,QSA]
-RewriteRule ^editar-llibres\-([a-z]{2})\-([0-9]{3})\-([A-Z0-9]{3,5})\-([0-9]{3}).html$ llibres/index.php?lloc=modllibres&mode=1&propi=$1&class=$2&autor=$3&num_l=$4 [L,QSA]
+RewriteRule ^editar-llibres\-([a-z]{2})\-([0-9]{3})\-([A-Z0-9]{3,5})\-([0-9]{3}).html$ llibres/index.php?lloc=modllibres&mode=1&propi=$1&class=$2&autpr=$3&num_l=$4 [L,QSA]
 </IfModule>

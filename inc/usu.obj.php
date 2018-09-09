@@ -39,7 +39,7 @@ class Usuari {
                 self::eixir(Link::url("index"));
             $temps0 = Sessio::lleg("temps");
             $temps1 = time();
-            if (($temps1 - $temps0) > 600)
+            if (($temps1 - $temps0) > 900)
                 self::eixir(Link::url("index"));
             Sessio::afeg("temps", time());
         }

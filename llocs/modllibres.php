@@ -142,8 +142,12 @@ class LlocModllibres {
                 else
                     $this->alert = 7;
             }
-            if ($this->alert == 6)
-                redireccionar(Link::url("editar-llibres", $this->llib->etiqueta()));
+            if ($this->alert == 6) {
+                if ($this->mod == 0)
+                    redireccionar(Link::url("afegir-llibres"));
+                else if ($this->mod == 1)
+                    redireccionar(Link::url("editar-llibres", $this->llib->etiqueta()));
+            }
         }
     }
 

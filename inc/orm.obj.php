@@ -295,8 +295,12 @@ class Llibre {
                 $this->num = intval($v_ult[0][0]) + 1;
             $sql_cad = Consulta::insertLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg);
         }
-        else
+        else {
+            $v_ll = BaseDades::consVector(Consulta::llibre_perEtiqueta($this->propi->codi, $this->categ->codi, $this->autor->codi, $this->num));
+            if ((count($v_ll) > 0) and (intval($v_ll[0][7]) != $this->id))
+                return 0;
             $sql_cad = Consulta::actualLlibre($this->categ->id, $this->autor->id, $this->propi->id, $this->num, $nom_cd, $this->dataM, $this->idiom->id, $edi_cd, $this->nisbn, $this->anyEd, $this->anyPu, $this->dataC, $llo_cd, $des_cd, $this->numpg, $this->id);
+        }
         if (!BaseDades::consulta($sql_cad))
             return 0;
 

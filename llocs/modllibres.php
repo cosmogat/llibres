@@ -15,8 +15,11 @@ class LlocModllibres {
     
     public $alert = 0;
     public $llib;
+    public $propi = array();
     public $idiomes = array();
     public $categ = array();
+    public $subc = array();
+    public $subsc = array();
     
     public function calculs() {
         $this->mod = intval(Peticio::obte("mode"));
@@ -100,10 +103,6 @@ class LlocModllibres {
             }
         }
         else if ($this->mod == 1) {
-            $this->idiomes = BaseDades::consVector(Consulta::idiomes());
-            $vec_categ = BaseDades::consVector(Consulta::categories_completes());
-            for ($i = 0; $i < count($vec_categ); $i++)
-                $this->categ[] = array($vec_categ[$i][0], $vec_categ[$i][0] . " - " . $vec_categ[$i][1]);
             $pro = Peticio::obte("propi");
             $cla = Peticio::obte("class");
             $aut = Peticio::obte("autor");
@@ -112,7 +111,27 @@ class LlocModllibres {
             if ((preg_match("/^[a-z]{2}$/", $pro)) and (preg_match("/^[0-9]{3}$/", $cla)) and (preg_match("/^[A-Z0-9]{3,5}$/", $aut)) and (preg_match("/^[0-9]{3}$/", $num)))
                 $this->llib->agafPerEt($pro, $cla, $aut, $num);
             if ($this->llib->id != -1) {
-
+                $vec_propi = BaseDades::consVector(Consulta::usuaris());
+                for ($i = 0; $i < count($vec_propi); $i++)
+                    $this->propi[] = array($vec_propi[$i][0], $vec_propi[$i][1], $vec_propi[$i][0] == $this->llib->propi->id ? "selected" : "");
+                $vec_idiom = BaseDades::consVector(Consulta::idiomes());
+                for ($i = 0; $i < count($vec_idiom); $i++)
+                    $this->idiomes[] = array($vec_idiom[$i][0], $vec_idiom[$i][1], $vec_idiom[$i][0] == $this->llib->idiom->id ? "selected" : "");
+                $vec_categ = BaseDades::consVector(Consulta::categories_completes());
+                for ($i = 0; $i < count($vec_categ); $i++)
+                    $this->categ[] = array($vec_categ[$i][0], $vec_categ[$i][0] . " - " . $vec_categ[$i][1], $this->llib->categ->codi[0] == $vec_categ[$i][0] ? "selected" : "");
+                $vec_categ = BaseDades::consVector(Consulta::class_perCodi($this->llib->categ->codi[0]));
+                for ($i = 0; $i < count($vec_categ); $i++)
+                    if ($vec_categ[$i][4] != 0) {
+                        $cod_sc = $vec_categ[$i][0] . $vec_categ[$i][2];
+                        $this->subc[] = array($cod_sc, $cod_sc . " - " . $vec_categ[$i][3], $this->llib->categ->codi[1] == $vec_categ[$i][2] ? "selected" : "");
+                    }
+                $vec_categ = BaseDades::consVector(Consulta::subclass_perCodi($this->llib->categ->codi[0], $this->llib->categ->codi[1]));
+                for ($i = 0; $i < count($vec_categ); $i++)
+                    if ($vec_categ[$i][6] != 0) {
+                        $cod_ssc = $vec_categ[$i][0] . $vec_categ[$i][2] . $vec_categ[$i][4];
+                        $this->subsc[] = array($cod_ssc, $cod_ssc . " - " . $vec_categ[$i][5], $this->llib->categ->codi[2] == $vec_categ[$i][4] ? "selected" : "");
+                    }
             }
             else
                 redireccionar(Link::url("categories"));
@@ -150,25 +169,66 @@ class LlocModllibres {
 
         if ($this->mod == 1) {
             $tpl->carregar("edllibres");
-            $tpl->mostrar("form_editar_0");
+            $tpl->mostrar("form_editar_0a");
             $tpl->set("ACTION", Link::url("afegir-llibres"));
-            $tpl->set("NOMLL", $this->llib->nom); 
+            $tpl->set("NOMLL", $this->llib->nom);
+            $tpl->set("NUM_AUT", 1 + count($this->llib->autSe));
+            $tpl->set("AUTOR", $this->llib->autor->codi . " - " . $this->llib->autor->nom);
             $tpl->imprimir();
 
+            for ($i = 0; $i < count($this->llib->autSe); $i++) {
+                $tpl->carregar("edllibres");
+                $tpl->mostrar("form_autse");
+                $tpl->set("AUT_NUM", 1 + $i);
+                $tpl->set("AUT_SE", $this->llib->autSe[$i]->codi . " - " . $this->llib->autSe[$i]->nom);
+                $tpl->imprimir();
+            }
+            
+            $tpl->carregarMostrar("edllibres", "form_editar_0b");
+
             $tpl->carregar("edllibres");
-            $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM"), $this->categ);
+            $tpl->mostrar("form_numll");
+            $tpl->set("NUMERET", $this->llib->num);
+            $tpl->imprimir();
+            
+            $tpl->carregarMostrar("edllibres", "form_editar_0c");
+            
+            $tpl->carregar("edllibres");
+            $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM", "CAT_CHK"), $this->categ);
             $tpl->mostrar("cat_desp");
             $tpl->imprimir();
 
-            $tpl->carregarMostrar("edllibres", "form_editar_1");
+            $tpl->carregarMostrar("edllibres", "form_editar_1a");
 
             $tpl->carregar("edllibres");
-            $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM"), $this->idiomes);
+            $tpl->setMatriu("scat_el", array("SCAT_COD", "SCAT_NOM", "SCAT_CHK"), $this->subc);
+            $tpl->mostrar("scat_desp");
+            $tpl->imprimir();
+            
+            $tpl->carregarMostrar("edllibres", "form_editar_1b");
+
+            $tpl->carregar("edllibres");
+            $tpl->setMatriu("sscat_el", array("SSCAT_COD", "SSCAT_NOM", "SSCAT_CHK"), $this->subsc);
+            $tpl->mostrar("sscat_desp");
+            $tpl->imprimir();
+            
+            $tpl->carregarMostrar("edllibres", "form_editar_1c");
+
+            $tpl->carregar("edllibres");
+            $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM", "IDI_CHK"), $this->idiomes);
             $tpl->mostrar("idi_desp");
+            $tpl->imprimir();
+
+
+            $tpl->carregarMostrar("edllibres", "form_editar_2a");
+
+            $tpl->carregar("edllibres");
+            $tpl->setMatriu("pro_el", array("PRO_COD", "PRO_NOM", "PRO_CHK"), $this->propi);
+            $tpl->mostrar("pro_desp");
             $tpl->imprimir();
             
             $tpl->carregar("edllibres");
-            $tpl->mostrar("form_editar_2");
+            $tpl->mostrar("form_editar_2b");
             $tpl->set("EDITO", $this->llib->edito); 
             $tpl->set("NISBN", $this->llib->nisbn); 
             $tpl->set("ANYPU", $this->llib->anyPu); 
@@ -176,7 +236,9 @@ class LlocModllibres {
             $tpl->set("DATAC", $this->llib->dataC); 
             $tpl->set("LLOCC", $this->llib->llocC); 
             $tpl->set("NPAGI", $this->llib->numpg); 
-            $tpl->set("DESCR", $this->llib->descr); 
+            $tpl->set("DESCR", $this->llib->descr);
+            $tpl->set("TIPUS", "warning"); 
+            $tpl->set("TEXTA", "Editar");
             $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
             $tpl->imprimir();
         }

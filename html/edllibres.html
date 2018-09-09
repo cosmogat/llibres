@@ -1,4 +1,4 @@
-<!-- INI form_editar_0 -->
+<!-- INI form_editar_0a -->
 <div class="container">
   <div class="col-md-3"></div>
   <div class="col-md-6">
@@ -12,28 +12,46 @@
       <br />
       
       <label for="nom_aut">Nom de l'autora o autor o col·lecció</label>
-      <div id="autors" data-nombredautors="1">
+      <div id="autors" data-nombredautors="{NUM_AUT}">
 	<div class="input-group autocomplete">
 	  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
-	  <input name="autor[]" type="text" class="form-control autoc" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut1" aria-describedby="basic-addon1">
+	  <input name="autor[]" type="text" class="form-control autoc" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut1" aria-describedby="basic-addon1" value="{AUTOR}">
 	  <span class="input-group-btn">
             <a class="btn btn-default" onclick="afAutors()"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
 	  </span>
 	</div>
+	<!-- FIN form_editar_0a -->
+	<!-- INI form_autse -->
+	<br />
+	<div class="input-group autocomplete">
+	  <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	  <input name="autor[]" type="text" class="form-control autoc" placeholder="Escriu i selecciona el nom de l'autora o autor o col·lecció" id="nom_aut{AUT_NUM}" aria-describedby="basic-addon1" value="{AUT_SE}">
+	</div>	
+	<!-- FIN form_autse -->
+	<!-- INI form_editar_0b -->
       </div>
       <br />
-      
+      <!-- FIN form_editar_0b -->
+      <!-- INI form_numll -->
+      <label for="numl">Número de l'etiqueta</label>
+      <div class="input-group">
+	<span class="input-group-addon" id="basic-addon99"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	<input name="numll" type="number" class="form-control"  placeholder="Número de l'etiqueta" id="numl" aria-describedby="basic-addon99" value="{NUMERET}">
+      </div>
+      <br />      
+      <!-- FIN form_numll -->
+      <!-- INI form_editar_0c -->
       <label for="cat">Categoria</label>
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon3"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="cat" class="form-control" id="sel1" aria-describedby="basic-addon3" onclick="subcat_din(0)" onchange="subcat_din(0)">
-	   <!-- FIN form_editar_0 -->
+	   <!-- FIN form_editar_0c -->
 	   <!-- INI cat_desp -->
 	   <!-- INI cat_el -->
-	   <option value="{CAT_COD}">{CAT_NOM}</option>
+	   <option value="{CAT_COD}" {CAT_CHK}>{CAT_NOM}</option>
 	   <!-- FIN cat_el -->
 	   <!-- FIN cat_desp -->
-	   <!-- INI form_editar_1 -->
+	   <!-- INI form_editar_1a -->
 	 </select>	 
       </div>     
       <br />
@@ -42,7 +60,13 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon4"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="subcat" class="form-control" id="sel2" aria-describedby="basic-addon4" onclick="subcat_din(0)" onchange="subcat_din(1)">
-	   <option value="-1">--- Selecciona una categoria ---</option>
+	   <!-- FIN form_editar_1a -->
+	   <!-- INI scat_desp -->
+	   <!-- INI scat_el -->
+	   <option value="{SCAT_COD}" {SCAT_CHK}>{SCAT_NOM}</option>
+	   <!-- FIN scat_el -->
+	   <!-- FIN scat_desp -->	   
+	   <!-- INI form_editar_1b -->
 	 </select>	 
        </div>   
        <br />
@@ -51,7 +75,13 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon5"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="subsubcat" class="form-control" id="sel3" aria-describedby="basic-addon5">
-	   <option value="-1">--- Selecciona una subcategoria ---</option>
+	   <!-- FIN form_editar_1b -->
+	   <!-- INI sscat_desp -->
+	   <!-- INI sscat_el -->
+	   <option value="{SSCAT_COD}" {SSCAT_CHK}>{SSCAT_NOM}</option>
+	   <!-- FIN sscat_el -->
+	   <!-- FIN sscat_desp -->
+	   <!-- INI form_editar_1c -->
 	 </select>	 
        </div>  
        <br />
@@ -60,18 +90,33 @@
        <div class="input-group">
 	 <span class="input-group-addon" id="basic-addon6"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	 <select name="idio" class="form-control" id="sel4" aria-describedby="basic-addon6">
-	   <!-- FIN form_editar_1 -->
+	   <!-- FIN form_editar_1c -->
 	   <!-- INI idi_desp -->
 	   <!-- INI idi_el -->
-	   <option value="{IDI_COD}">{IDI_NOM}</option>
+	   <option value="{IDI_COD}" {IDI_CHK}>{IDI_NOM}</option>
 	   <!-- FIN idi_el -->
 	   <!-- FIN idi_desp -->
-	   <!-- INI form_editar_2 -->
+	   <!-- INI form_editar_2a -->
 	 </select>	 
       </div>     
       <br />
 
-      <label for="nom_edit">Editorial</label>
+      <label for="pro">Propietari</label>
+       <div class="input-group">
+	 <span class="input-group-addon" id="basic-addon98"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
+	 <select name="prop" class="form-control" id="sel5" aria-describedby="basic-addon98">
+	   <!-- FIN form_editar_2a -->
+	   <!-- INI pro_desp -->
+	   <!-- INI pro_el -->
+	   <option value="{PRO_COD}" {PRO_CHK}>{PRO_NOM}</option>
+	   <!-- FIN pro_el -->
+	   <!-- FIN pro_desp -->
+	   <!-- INI form_editar_2b -->
+	 </select>	 
+       </div>     
+       <br /> 
+       
+       <label for="nom_edit">Editorial</label>
       <div class="input-group">
 	<span class="input-group-addon" id="basic-addon7"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></span>
 	<input name="edit" type="text" class="form-control"  placeholder="Nom de l'editorial" id="nom_edit" aria-describedby="basic-addon7" value="{EDITO}">
@@ -135,7 +180,7 @@
       
       <div class="btn-group pull-right" role="group" aria-label="...">
 	<div class="btn-group" role="group">
-	  <button class="btn btn-warning" name="afegir" type="submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Editar</button>
+	  <button class="btn btn-{TIPUS}" name="afegir" type="submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;{TEXTA}</button>
 	</div>
       </div>
       <div class="btn-group pull-left" role="group" aria-label="...">
@@ -150,4 +195,4 @@
     <hr />
   </div>
 </div>
-<!-- FIN form_editar_2 -->
+<!-- FIN form_editar_2b -->

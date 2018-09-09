@@ -271,6 +271,11 @@ class Consulta {
         $sql = "SELECT idusuari, nom, codi FROM Usuaris WHERE idusuari = " . intval($id);
         return $sql;
     }
+
+    static public function usuaris() {
+        $sql = "SELECT idusuari AS c00, nom AS c01, codi AS c02, permisos AS c03 FROM Usuaris";
+        return $sql;
+    }
     
     static public function autor($codi) {
         $sql ="SELECT idescriptor AS c00, autor AS c01, codi AS c02, img_dir AS c03, biografia AS c04 , es_colleccio AS c05 FROM Escriptor WHERE codi = '" . $codi . "'";

@@ -15,7 +15,7 @@ function quinPerfil() {
 function cadValid($cad) {
     if (strpos($cad, "../") !== false)
         return false;
-    $permesos = "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZÁÀÄÉÈËÍÌÏÓÒÖÚÙÜabcçdefghijklmnñopqrstuvwxyzáàäéèëíìïóòöúùü0123456789?._-,:/\\ ";
+    $permesos = "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZÁÀÄÉÈËÍÌÏÓÒÖÚÙÜabcçdefghijklmnñopqrstuvwxyzáàäéèëíìïóòöúùü0123456789?.·_-,:/\\ ";
     for ($i = 0; $i < strlen($cad); $i++)
         if (strpos($permesos, substr($cad, $i, 1)) === false)
             return false;

@@ -169,7 +169,7 @@ class LlocModllibres {
 
         if ($this->mod == 1) {
             $tpl->carregar("edllibres");
-            $tpl->mostrar("form_editar_0a");
+            $tpl->mostrar("form_editar_0");
             $tpl->set("ACTION", Link::url("afegir-llibres"));
             $tpl->set("NOMLL", $this->llib->nom);
             $tpl->set("NUM_AUT", 1 + count($this->llib->autSe));
@@ -184,35 +184,35 @@ class LlocModllibres {
                 $tpl->imprimir();
             }
             
-            $tpl->carregarMostrar("edllibres", "form_editar_0b");
+            $tpl->carregarMostrar("edllibres", "form_editar_1");
 
             $tpl->carregar("edllibres");
             $tpl->mostrar("form_numll");
             $tpl->set("NUMERET", $this->llib->num);
             $tpl->imprimir();
             
-            $tpl->carregarMostrar("edllibres", "form_editar_0c");
+            $tpl->carregarMostrar("edllibres", "form_editar_2");
             
             $tpl->carregar("edllibres");
             $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM", "CAT_CHK"), $this->categ);
             $tpl->mostrar("cat_desp");
             $tpl->imprimir();
 
-            $tpl->carregarMostrar("edllibres", "form_editar_1a");
+            $tpl->carregarMostrar("edllibres", "form_editar_3");
 
             $tpl->carregar("edllibres");
             $tpl->setMatriu("scat_el", array("SCAT_COD", "SCAT_NOM", "SCAT_CHK"), $this->subc);
             $tpl->mostrar("scat_desp");
             $tpl->imprimir();
             
-            $tpl->carregarMostrar("edllibres", "form_editar_1b");
+            $tpl->carregarMostrar("edllibres", "form_editar_4");
 
             $tpl->carregar("edllibres");
             $tpl->setMatriu("sscat_el", array("SSCAT_COD", "SSCAT_NOM", "SSCAT_CHK"), $this->subsc);
             $tpl->mostrar("sscat_desp");
             $tpl->imprimir();
             
-            $tpl->carregarMostrar("edllibres", "form_editar_1c");
+            $tpl->carregarMostrar("edllibres", "form_editar_5");
 
             $tpl->carregar("edllibres");
             $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM", "IDI_CHK"), $this->idiomes);
@@ -220,7 +220,7 @@ class LlocModllibres {
             $tpl->imprimir();
 
 
-            $tpl->carregarMostrar("edllibres", "form_editar_2a");
+            $tpl->carregarMostrar("edllibres", "form_editar_6");
 
             $tpl->carregar("edllibres");
             $tpl->setMatriu("pro_el", array("PRO_COD", "PRO_NOM", "PRO_CHK"), $this->propi);
@@ -228,7 +228,7 @@ class LlocModllibres {
             $tpl->imprimir();
             
             $tpl->carregar("edllibres");
-            $tpl->mostrar("form_editar_2b");
+            $tpl->mostrar("form_editar_7");
             $tpl->set("EDITO", $this->llib->edito); 
             $tpl->set("NISBN", $this->llib->nisbn); 
             $tpl->set("ANYPU", $this->llib->anyPu); 

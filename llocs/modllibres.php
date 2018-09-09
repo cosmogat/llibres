@@ -147,71 +147,26 @@ class LlocModllibres {
 
     public function imprimir() {
         $tpl = new Plantilla("./html");
+        
         if ($this->mod == 0) {
             $this->subc[] = array(-1, "--- Selecciona una categoria ---");
-            $this->subsc[] = array(-1, "--- Selecciona una subcategoria ---");
-            $tpl->carregar("modllibres");
-            $tpl->mostrar("form_editar_0");
-            $tpl->set("ACTION", Link::url("afegir-llibres"));
-            $tpl->set("NOMLL", "");
-            $tpl->set("NUM_AUT", 1);
-            $tpl->set("AUTOR", "");
-            $tpl->imprimir();
-
-            $tpl->carregarMostrar("modllibres", "form_editar_1");
-            $tpl->carregarMostrar("modllibres", "form_editar_2");
-            
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM", "CAT_CHK"), $this->categ);
-            $tpl->mostrar("cat_desp");
-            $tpl->imprimir();
-
-            $tpl->carregarMostrar("modllibres", "form_editar_3");
-
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("scat_el", array("SCAT_COD", "SCAT_NOM", "SCAT_CHK"), $this->subc);
-            $tpl->mostrar("scat_desp");
-            $tpl->imprimir();
-            
-            $tpl->carregarMostrar("modllibres", "form_editar_4");
-
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("sscat_el", array("SSCAT_COD", "SSCAT_NOM", "SSCAT_CHK"), $this->subsc);
-            $tpl->mostrar("sscat_desp");
-            $tpl->imprimir();
-            
-            $tpl->carregarMostrar("modllibres", "form_editar_5");
-
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM", "IDI_CHK"), $this->idiomes);
-            $tpl->mostrar("idi_desp");
-            $tpl->imprimir();
-            
-            $tpl->carregar("modllibres");
-            $tpl->mostrar("form_editar_7");
-            $tpl->set("EDITO", ""); 
-            $tpl->set("NISBN", ""); 
-            $tpl->set("ANYPU", ""); 
-            $tpl->set("ANYED", ""); 
-            $tpl->set("DATAC", ""); 
-            $tpl->set("LLOCC", ""); 
-            $tpl->set("NPAGI", ""); 
-            $tpl->set("DESCR", "");
-            $tpl->set("TIPUS", "success"); 
-            $tpl->set("TEXTA", "Afegir");
-            $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
-            $tpl->imprimir();
+            $this->subsc[] = array(-1, "--- Selecciona una subcategoria ---");            
         }
+        $tpl->carregar("modllibres");
+        $tpl->mostrar("form_editar_0");
+        if ($this->mod == 0) {
+            $tpl->set("ACTION", Link::url("afegir-llibres"));
+            $tpl->set("AUTOR", "");
+        }
+        else if ($this->mod == 1) {
+            $tpl->set("ACTION", Link::url("editar-llibres", $this->llib->etiqueta()));
+            $tpl->set("AUTOR", $this->llib->autor->codi . " - " . $this->llib->autor->nom);
+        }
+        $tpl->set("NOMLL", $this->llib->nom);
+        $tpl->set("NUM_AUT", 1 + count($this->llib->autSe));
+        $tpl->imprimir();
 
         if ($this->mod == 1) {
-            $tpl->carregar("modllibres");
-            $tpl->mostrar("form_editar_0");
-            $tpl->set("ACTION", Link::url("editar-llibres", $this->llib->etiqueta()));
-            $tpl->set("NOMLL", $this->llib->nom);
-            $tpl->set("NUM_AUT", 1 + count($this->llib->autSe));
-            $tpl->set("AUTOR", $this->llib->autor->codi . " - " . $this->llib->autor->nom);
-            $tpl->imprimir();
-
             for ($i = 0; $i < count($this->llib->autSe); $i++) {
                 $tpl->carregar("modllibres");
                 $tpl->mostrar("form_autse");
@@ -219,65 +174,80 @@ class LlocModllibres {
                 $tpl->set("AUT_SE", $this->llib->autSe[$i]->codi . " - " . $this->llib->autSe[$i]->nom);
                 $tpl->imprimir();
             }
-            
-            $tpl->carregarMostrar("modllibres", "form_editar_1");
-
+        }
+        
+        $tpl->carregarMostrar("modllibres", "form_editar_1");
+        
+        if ($this->mod == 1) {
             $tpl->carregar("modllibres");
             $tpl->mostrar("form_numll");
             $tpl->set("NUMERET", $this->llib->num);
             $tpl->imprimir();
+        }
+ 
+        $tpl->carregarMostrar("modllibres", "form_editar_2");
             
-            $tpl->carregarMostrar("modllibres", "form_editar_2");
+        $tpl->carregar("modllibres");
+        $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM", "CAT_CHK"), $this->categ);
+        $tpl->mostrar("cat_desp");
+        $tpl->imprimir();
+
+        $tpl->carregarMostrar("modllibres", "form_editar_3");
+
+        $tpl->carregar("modllibres");
+        $tpl->setMatriu("scat_el", array("SCAT_COD", "SCAT_NOM", "SCAT_CHK"), $this->subc);
+        $tpl->mostrar("scat_desp");
+        $tpl->imprimir();
             
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("cat_el", array("CAT_COD", "CAT_NOM", "CAT_CHK"), $this->categ);
-            $tpl->mostrar("cat_desp");
-            $tpl->imprimir();
+        $tpl->carregarMostrar("modllibres", "form_editar_4");
 
-            $tpl->carregarMostrar("modllibres", "form_editar_3");
-
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("scat_el", array("SCAT_COD", "SCAT_NOM", "SCAT_CHK"), $this->subc);
-            $tpl->mostrar("scat_desp");
-            $tpl->imprimir();
+        $tpl->carregar("modllibres");
+        $tpl->setMatriu("sscat_el", array("SSCAT_COD", "SSCAT_NOM", "SSCAT_CHK"), $this->subsc);
+        $tpl->mostrar("sscat_desp");
+        $tpl->imprimir();
             
-            $tpl->carregarMostrar("modllibres", "form_editar_4");
+        $tpl->carregarMostrar("modllibres", "form_editar_5");
 
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("sscat_el", array("SSCAT_COD", "SSCAT_NOM", "SSCAT_CHK"), $this->subsc);
-            $tpl->mostrar("sscat_desp");
-            $tpl->imprimir();
-            
-            $tpl->carregarMostrar("modllibres", "form_editar_5");
+        $tpl->carregar("modllibres");
+        $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM", "IDI_CHK"), $this->idiomes);
+        $tpl->mostrar("idi_desp");
+        $tpl->imprimir();
 
-            $tpl->carregar("modllibres");
-            $tpl->setMatriu("idi_el", array("IDI_COD", "IDI_NOM", "IDI_CHK"), $this->idiomes);
-            $tpl->mostrar("idi_desp");
-            $tpl->imprimir();
-
-
+        if ($this->mod == 1) {
             $tpl->carregarMostrar("modllibres", "form_editar_6");
-
             $tpl->carregar("modllibres");
             $tpl->setMatriu("pro_el", array("PRO_COD", "PRO_NOM", "PRO_CHK"), $this->propi);
             $tpl->mostrar("pro_desp");
             $tpl->imprimir();
-            
-            $tpl->carregar("modllibres");
-            $tpl->mostrar("form_editar_7");
-            $tpl->set("EDITO", $this->llib->edito); 
-            $tpl->set("NISBN", $this->llib->nisbn); 
+        }
+        
+        $tpl->carregar("modllibres");
+        $tpl->mostrar("form_editar_7");
+        $tpl->set("EDITO", $this->llib->edito); 
+        $tpl->set("NISBN", $this->llib->nisbn);
+        $tpl->set("DATAC", $this->llib->dataC); 
+        $tpl->set("LLOCC", $this->llib->llocC); 
+        $tpl->set("DESCR", $this->llib->descr);
+        if ($this->mod == 0) {
+            $tpl->set("ANYPU", ""); 
+            $tpl->set("ANYED", "");
+            $tpl->set("NPAGI", ""); 
+            $tpl->set("TIPUS", "success"); 
+            $tpl->set("TEXTA", "Afegir");
+        }
+        else if ($this->mod == 1) {
             $tpl->set("ANYPU", $this->llib->anyPu); 
-            $tpl->set("ANYED", $this->llib->anyEd); 
-            $tpl->set("DATAC", $this->llib->dataC); 
-            $tpl->set("LLOCC", $this->llib->llocC); 
+            $tpl->set("ANYED", $this->llib->anyEd);
             $tpl->set("NPAGI", $this->llib->numpg); 
-            $tpl->set("DESCR", $this->llib->descr);
             $tpl->set("TIPUS", "warning"); 
             $tpl->set("TEXTA", "Editar");
-            $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
-            $tpl->imprimir();
         }
+        $tpl->set("TORNAR", Link::url("index")); // canviar a menu de configuració
+        $tpl->imprimir();
+
+
+
+        
         if ($this->alert != 0)
             $tpl->carregarMostrar("modllibres", "ale_" . $this->alert);
                     

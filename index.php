@@ -1,6 +1,6 @@
 <?php
 // 26-12-2017
-// alex
+// cosmogat
 // index.php
 require_once("./inc/tpl.obj.php");
 require_once("./inc/sql.obj.php");
